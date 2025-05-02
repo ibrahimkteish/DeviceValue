@@ -85,6 +85,7 @@ Sort your devices by creation date, name, currency, purchase price, or last upda
 
 1. Clone the repository
 2. Open the project in Xcode
+    - If the `.xcworkspace` is empty, drag the `DeviceValue.xcodeproj` & `DeviceValueApp` folder to the Xcode window.
 3. Build and run the project
 
 ## Contributing
