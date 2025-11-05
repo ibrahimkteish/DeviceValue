@@ -1,19 +1,19 @@
 import ComposableArchitecture
 import Foundation
 import Models
-import SharingGRDB
+import SQLiteData
 
 @Reducer
 public struct Analytics: Sendable {
   @ObservableState
   public struct State: Equatable, Sendable {
-    @SharedReader(.fetch(PortfolioMetricsRequest()))
+    @Fetch(PortfolioMetricsRequest())
     public var portfolioMetrics: PortfolioMetrics?
-    @SharedReader(.fetch(UsageMetricsRequest()))
+    @Fetch(UsageMetricsRequest())
     public var usage: UsageMetrics?
-    @SharedReader(.fetch(DeviceUsageMetricsRequest()))
+    @Fetch(DeviceUsageMetricsRequest())
     public var devices: [DeviceUsageMetrics] = []
-    @SharedReader(.fetch(DefaultCurrencyRequest()))
+    @Fetch(DefaultCurrencyRequest())
     public var defaultCurrency: String = "$"
 
     public init() {}

@@ -7,7 +7,7 @@ import Foundation
 import Generated
 import GRDB
 import Models
-import SharingGRDB
+import SQLiteData
 
 extension UsageRatePeriod {
   var localizedName: String {
@@ -53,10 +53,10 @@ public struct AddDeviceFeature: Sendable {
     var selectedUsageRatePeriodId: Int64
     var mode: Mode
 
-    @SharedReader(.fetchAll(sql: "SELECT * from \(Currency.databaseTableName)", animation: .default))
+    @Fetch(.fetchAll(sql: "SELECT * from \(Currency.databaseTableName)", animation: .default))
     public var currencies: [Currency]
 
-    @SharedReader(.fetchAll(sql: "SELECT * from \(UsageRatePeriod.databaseTableName)", animation: .default))
+    @Fetch(.fetchAll(sql: "SELECT * from \(UsageRatePeriod.databaseTableName)", animation: .default))
     public var usageRatePeriods: [UsageRatePeriod]
 
     var isValid: Bool {

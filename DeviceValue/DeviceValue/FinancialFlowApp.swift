@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Dependencies
 import HomeFeature
 import Models
-import SharingGRDB
+import SQLiteData
 import SwiftUI
 
 @main

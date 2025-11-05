@@ -68,8 +68,8 @@ let package = Package(
             from: "7.2.0"
         ),
         .package(
-            url: "https://github.com/pointfreeco/sharing-grdb",
-            from: "0.1.0"
+            url: "https://github.com/pointfreeco/sqlite-data",
+            from: "1.3.0"
         ),
     ],
     targets: [
@@ -84,7 +84,7 @@ let package = Package(
                 "Utils",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "SharingGRDB", package: "sharing-grdb"),
+                .product(name: "SQLiteData", package: "sqlite-data"),
             ]
         ),
         .target(name:"BuildClient", dependencies: [
@@ -119,7 +119,7 @@ let package = Package(
                 "Utils",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "SharingGRDB", package: "sharing-grdb"),
+                .product(name: "SQLiteData", package: "sqlite-data"),
             ]
         ),
         .target(
@@ -130,14 +130,14 @@ let package = Package(
                 "Utils",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "SharingGRDB", package: "sharing-grdb"),
+                .product(name: "SQLiteData", package: "sqlite-data"),
             ]
         ),
         .target(
             name: "Models",
             dependencies: [
                 "Utils",
-                .product(name: "SharingGRDB", package: "sharing-grdb"),
+                .product(name: "SQLiteData", package: "sqlite-data"),
             ]
         ),
 
@@ -151,7 +151,7 @@ let package = Package(
                 "UIApplicationClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "SharingGRDB", package: "sharing-grdb"),
+                .product(name: "SQLiteData", package: "sqlite-data"),
             ]
         ),
         

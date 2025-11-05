@@ -1,7 +1,7 @@
 import ComposableArchitecture
 import Generated
 import Models
-import SharingGRDB
+import SQLiteData
 import SwiftUI
 
 public struct CurrenciesRatesView: View {

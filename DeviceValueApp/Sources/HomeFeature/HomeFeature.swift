@@ -12,7 +12,7 @@ import CurrenciesRatesFeature
 import Generated
 import Models
 import SettingsFeature
-import SharingGRDB
+import SQLiteData
 
 public struct CurrencyCost: FetchableRecord, Decodable, Equatable, Sendable {
   let currencyCode: String
@@ -46,14 +46,14 @@ public struct HomeFeature: Sendable {
     @Presents
     public var destination: Destination.State?
 
-    @SharedReader(.fetch(Items(ordering: .created)))
+    @Fetch(Items(ordering: .created))
     public var devices: [Items.State]
     @Shared(.inMemory("order"))
     var ordering: Ordering = .created
-    @SharedReader(.fetch(Aggregate()))
+    @Fetch(Aggregate())
     public var count: CurrencyCost? = nil
 
-    @SharedReader(.fetch(SettingsFeature.SettingsFetcher()))
+    @Fetch(SettingsFeature.SettingsFetcher())
     public var settingsWithCurrency: AppSettingsWithCurrency = .init()
 
     var path = StackState<Path.State>()

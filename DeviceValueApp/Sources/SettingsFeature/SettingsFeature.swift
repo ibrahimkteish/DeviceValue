@@ -7,7 +7,7 @@ import ComposableArchitecture
 import Foundation
 import GRDB
 import Models
-import SharingGRDB
+import SQLiteData
 import UIApplicationClient
 import UIKit
 
@@ -49,10 +49,10 @@ public struct SettingsFeature: Sendable {
 
   @ObservableState
   public struct State: Equatable, Sendable {
-    @SharedReader(.fetch(SettingsFetcher()))
+    @Fetch(SettingsFetcher())
     public var settingsWithCurrency: AppSettingsWithCurrency = .init()
 
-    @SharedReader(.fetchAll(sql: "SELECT * from currencies ORDER BY code = 'USD' DESC, name", animation: .default))
+    @Fetch(.fetchAll(sql: "SELECT * from currencies ORDER BY code = 'USD' DESC, name", animation: .default))
     public var availableCurrencies: [Currency]
 
     public var presentation = SettingsPresentation(

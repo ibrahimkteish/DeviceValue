@@ -1,7 +1,7 @@
 import ComposableArchitecture
 import Generated
 import Models
-import SharingGRDB
+import SQLiteData
 import UIKit
 
 @Reducer
@@ -58,10 +58,10 @@ public struct CurrenciesRatesFeature: Sendable {
     @Shared(.inMemory("currency_search"))
     var searchTerm: String = ""
 
-    @SharedReader(.fetch(CurrencyRequest()))
+    @Fetch(CurrencyRequest())
     public var currencies: [Currency]
 
-    @SharedReader(.fetchOne(sql: "SELECT COUNT(*) FROM currencies"))
+    @Fetch(.fetchOne(sql: "SELECT COUNT(*) FROM currencies"))
     public var totalCurrenciesCount: Int = 0
 
     public var showingAddCurrency = false
