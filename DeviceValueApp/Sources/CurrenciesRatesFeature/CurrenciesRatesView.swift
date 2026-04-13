@@ -125,13 +125,13 @@ public struct CurrenciesRatesView: View {
         Circle()
           .fill(
             LinearGradient(
-              colors: [Color(hex: 0x0058BC), Color(hex: 0x0070EB)],
+              colors: [.brandBlue, .brandBlueLight],
               startPoint: .topLeading,
               endPoint: .bottomTrailing
             )
           )
           .shadow(
-            color: Color(hex: 0x0058BC).opacity(0.2),
+            color: .brandBlue.opacity(0.2),
             radius: 8, x: 0, y: 4
           )
       )

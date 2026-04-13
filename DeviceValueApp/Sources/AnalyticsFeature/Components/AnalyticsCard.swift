@@ -36,7 +36,7 @@ struct AnalyticsCard: View {
               RoundedRectangle(cornerRadius: .infinity)
                 .fill(
                   LinearGradient(
-                    colors: [Color(hex: 0x0058BC), Color(hex: 0x0070EB)],
+                    colors: [.brandBlue, .brandBlueLight],
                     startPoint: .leading,
                     endPoint: .trailing
                   )

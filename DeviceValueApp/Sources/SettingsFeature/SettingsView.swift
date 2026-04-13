@@ -54,12 +54,12 @@ public struct SettingsView: View {
                 store.send(.openCurrencyRates)
               }
               .font(.system(size: 12, weight: .semibold))
-              .foregroundStyle(Color(hex: 0x0058BC))
+              .foregroundStyle(Color.brandBlue)
               .padding(.horizontal, 12)
               .padding(.vertical, 4)
               .background(
                 Capsule()
-                  .fill(Color(hex: 0x0070EB).opacity(0.1))
+                  .fill(Color.brandBlueLight.opacity(0.1))
               )
 
               if let currency = store.presentation.defaultCurrency {

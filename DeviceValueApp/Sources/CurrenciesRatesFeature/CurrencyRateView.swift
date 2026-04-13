@@ -41,12 +41,12 @@ public struct CurrencyRateView: View {
         Text(Strings.base.uppercased())
           .font(.system(size: 10, weight: .semibold))
           .tracking(-0.5)
-          .foregroundStyle(Color(hex: 0x0058BC))
+          .foregroundStyle(Color.brandBlue)
           .padding(.horizontal, 12)
           .padding(.vertical, 2.5)
           .background(
             Capsule()
-              .fill(Color(hex: 0x0058BC).opacity(0.1))
+              .fill(Color.brandBlue.opacity(0.1))
           )
       } else {
         // Rate input
@@ -55,7 +55,7 @@ public struct CurrencyRateView: View {
             .keyboardType(.decimalPad)
             .multilineTextAlignment(.trailing)
             .font(.system(size: 16, weight: .bold))
-            .foregroundStyle(Color(hex: 0x0058BC))
+            .foregroundStyle(Color.brandBlue)
             .padding(.leading, 32)
             .padding(.trailing, 12)
             .padding(.vertical, 8)

@@ -51,7 +51,7 @@ public struct HomeView: View {
       } label: {
         Image(systemName: "gearshape.fill")
           .font(.system(size: 18))
-          .foregroundStyle(Color(hex: 0x0058BC))
+          .foregroundStyle(Color.brandBlue)
       }
 
       Spacer()
@@ -60,12 +60,12 @@ public struct HomeView: View {
         Text("Total Daily Cost")
           .font(.system(size: 24, weight: .bold))
           .tracking(-0.6)
-          .foregroundStyle(Color(hex: 0x0058BC))
+          .foregroundStyle(Color.brandBlue)
 
         if let cost = store.count {
           Text(cost.totalDailyCost.formatted(.currency(code: cost.currencyCode)) + "/\(Strings.day)")
             .font(.system(size: 20, weight: .heavy))
-            .foregroundStyle(Color(hex: 0x0058BC).opacity(0.6))
+            .foregroundStyle(Color.brandBlue.opacity(0.6))
         }
       }
 
@@ -76,7 +76,7 @@ public struct HomeView: View {
       } label: {
         Image(systemName: "chart.bar.doc.horizontal.fill")
           .font(.system(size: 18))
-          .foregroundStyle(Color(hex: 0x0058BC))
+          .foregroundStyle(Color.brandBlue)
       }
     }
     .padding(.horizontal, 24)
@@ -151,7 +151,7 @@ public struct HomeView: View {
           Circle()
             .fill(
               LinearGradient(
-                colors: [Color(hex: 0x0058BC), Color(hex: 0x0070EB)],
+                colors: [.brandBlue, .brandBlueLight],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
               )

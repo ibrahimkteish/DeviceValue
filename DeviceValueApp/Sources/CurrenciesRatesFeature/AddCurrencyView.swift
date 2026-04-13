@@ -97,22 +97,22 @@ public struct AddCurrencyView: View {
             TextField(Strings.exchangeRateToUSD, text: $usdRate)
               .keyboardType(.decimalPad)
               .font(.system(size: 24, weight: .heavy))
-              .foregroundStyle(Color(hex: 0x0058BC))
+              .foregroundStyle(Color.brandBlue)
               .padding(16)
               .background(
                 RoundedRectangle(cornerRadius: 12)
                   .fill(Color(.secondarySystemBackground))
-                  .shadow(color: Color(hex: 0x0058BC).opacity(0.05), radius: 4, x: 0, y: 2)
+                  .shadow(color: .brandBlue.opacity(0.05), radius: 4, x: 0, y: 2)
               )
 
             if !code.isEmpty, let rate = Double(usdRate) {
               HStack(spacing: 6) {
                 Image(systemName: "checkmark.circle.fill")
                   .font(.system(size: 11.667))
-                  .foregroundStyle(Color(hex: 0x006E28))
+                  .foregroundStyle(Color.brandGreen)
                 Text("1 USD = \(rate.formatted()) \(code.uppercased())")
                   .font(.system(size: 12, weight: .medium))
-                  .foregroundStyle(Color(hex: 0x006E28))
+                  .foregroundStyle(Color.brandGreen)
               }
             }
           }
@@ -133,13 +133,13 @@ public struct AddCurrencyView: View {
               RoundedRectangle(cornerRadius: 16)
                 .fill(
                   LinearGradient(
-                    colors: [Color(hex: 0x0058BC), Color(hex: 0x0070EB)],
+                    colors: [.brandBlue, .brandBlueLight],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                   )
                 )
                 .shadow(
-                  color: Color(hex: 0x0058BC).opacity(0.25),
+                  color: .brandBlue.opacity(0.25),
                   radius: 12, x: 0, y: 8
                 )
             )

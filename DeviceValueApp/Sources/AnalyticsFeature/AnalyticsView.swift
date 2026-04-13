@@ -35,9 +35,9 @@ public struct AnalyticsView: View {
       AnalyticsCard(
         title: Strings.totalPurchaseValue,
         value: store.formattedTotalPurchaseValue,
-        valueColor: Color(hex: 0x0058BC),
+        valueColor: .brandBlue,
         subtitle: "Global Assets",
-        subtitleColor: Color(hex: 0x006E28)
+        subtitleColor: .brandGreen
       )
 
       AnalyticsCard(
@@ -50,7 +50,7 @@ public struct AnalyticsView: View {
       AnalyticsCard(
         title: Strings.consumedValue,
         value: store.formattedConsumedValue,
-        valueColor: Color(hex: 0x894D00),
+        valueColor: .brandAmber,
         subtitle: "Lifecycle Total",
         subtitleColor: .secondary
       )
@@ -59,7 +59,7 @@ public struct AnalyticsView: View {
         title: Strings.dailyUsage,
         value: store.formattedDailyUsage,
         subtitle: "Current Burn",
-        subtitleColor: Color(hex: 0xBA1A1A)
+        subtitleColor: .brandRed
       )
     }
     .padding(.horizontal, 24)
@@ -87,13 +87,13 @@ public struct AnalyticsView: View {
   @ViewBuilder
   private func deviceUsageRow(_ metric: DeviceUsageMetrics) -> some View {
     let isHighUsage = metric.isWithinExpectedUsage
-    let usageColor: Color = isHighUsage ? Color(hex: 0xBA1A1A) : Color(hex: 0x006E28)
+    let usageColor: Color = isHighUsage ? .brandRed : .brandGreen
     let badgeBg: Color = isHighUsage ? Color(hex: 0xFFDAD6) : Color(hex: 0x6FFB85)
     let badgeText: Color = isHighUsage ? Color(hex: 0x93000A) : Color(hex: 0x00732A)
     let progressColor: Color = {
-      if metric.consumptionPercentage > 75 { return Color(hex: 0xBA1A1A) }
-      if metric.consumptionPercentage < 40 { return Color(hex: 0x006E28) }
-      return Color(hex: 0x0058BC)
+      if metric.consumptionPercentage > 75 { return .brandRed }
+      if metric.consumptionPercentage < 40 { return .brandGreen }
+      return .brandBlue
     }()
 
     VStack(alignment: .leading, spacing: 16) {

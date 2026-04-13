@@ -42,7 +42,7 @@ public struct DeviceCardView: View {
   }
 
   var progressColor: Color {
-    self.progress >= 1.0 ? Color(hex: 0x006E28) : Color(hex: 0x0058BC)
+    self.progress >= 1.0 ? .brandGreen : .brandBlue
   }
 
   // Formatted usage rate string
@@ -65,7 +65,7 @@ public struct DeviceCardView: View {
     HStack(spacing: 8) {
       Image(systemName: deviceIconName)
         .font(.system(size: 14))
-        .foregroundStyle(Color(hex: 0x0058BC))
+        .foregroundStyle(Color.brandBlue)
       Text(data.device.name)
         .font(.system(size: 18, weight: .heavy))
         .foregroundStyle(.primary)
@@ -101,7 +101,7 @@ public struct DeviceCardView: View {
         metricCell(
           label: Strings.usageRate.uppercased(),
           value: usageRateString,
-          valueColor: Color(hex: 0x006E28)
+          valueColor: .brandGreen
         )
       }
       GridRow {
@@ -113,7 +113,7 @@ public struct DeviceCardView: View {
         metricCell(
           label: "REMAINING",
           value: remainingCost.formatted(.currency(code: data.currency.code)),
-          valueColor: Color(hex: 0x894D00)
+          valueColor: .brandAmber
         )
       }
     }

@@ -2,6 +2,7 @@ import ComposableArchitecture
 import Generated
 import Models
 import SwiftUI
+import Utils
 
 public struct AddDeviceView: View {
   @Bindable var store: StoreOf<AddDeviceFeature>
@@ -46,7 +47,7 @@ public struct AddDeviceView: View {
                     store.send(.addCurrencyTapped)
                   } label: {
                     Text(Strings.addCurrency)
-                      .foregroundStyle(Color(hex: 0x0058BC))
+                      .foregroundStyle(Color.brandBlue)
                   }
                 }
                 .padding(.horizontal, 16)
@@ -82,7 +83,7 @@ public struct AddDeviceView: View {
                     Text(Strings.addCurrency)
                   }
                   .font(.system(size: 13, weight: .semibold))
-                  .foregroundStyle(Color(hex: 0x0058BC))
+                  .foregroundStyle(Color.brandBlue)
                 }
               }
             }
@@ -160,7 +161,7 @@ public struct AddDeviceView: View {
                     Text(period.localizedName.capitalized)
                       .font(.system(size: 13, weight: .semibold))
                       .foregroundStyle(
-                        isSelected ? Color(hex: 0x0058BC) : Color.secondary.opacity(0.6)
+                        isSelected ? .brandBlue : Color.secondary.opacity(0.6)
                       )
                       .frame(maxWidth: .infinity)
                       .padding(.vertical, 10)
@@ -194,7 +195,7 @@ public struct AddDeviceView: View {
           } label: {
             Text(Strings.cancel)
               .font(.system(size: 16, weight: .semibold))
-              .foregroundStyle(Color(hex: 0x0058BC))
+              .foregroundStyle(Color.brandBlue)
               .frame(width: 124, height: 56)
           }
 
@@ -210,13 +211,13 @@ public struct AddDeviceView: View {
                 RoundedRectangle(cornerRadius: 24)
                   .fill(
                     LinearGradient(
-                      colors: [Color(hex: 0x0058BC), Color(hex: 0x0070EB)],
+                      colors: [.brandBlue, .brandBlueLight],
                       startPoint: .topLeading,
                       endPoint: .bottomTrailing
                     )
                   )
                   .shadow(
-                    color: Color(hex: 0x0058BC).opacity(0.2),
+                    color: .brandBlue.opacity(0.2),
                     radius: 8, x: 0, y: 4
                   )
               )
