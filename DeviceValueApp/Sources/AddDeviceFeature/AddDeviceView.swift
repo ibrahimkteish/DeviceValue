@@ -131,32 +131,27 @@ public struct AddDeviceView: View {
               )
               .datePickerStyle(.compact)
               .labelsHidden()
-              .frame(maxWidth: .infinity)
+              .frame(maxWidth: .infinity, alignment: .leading)
+              .padding(.horizontal, 16)
               .frame(height: 56)
-              .background(
-                RoundedRectangle(cornerRadius: 24)
-                  .fill(inputBackgroundColor)
-                  .shadow(color: .black.opacity(0.03), radius: 2, x: 0, y: 2)
-              )
             }
           }
 
           // Usage Rate
           fieldGroup(label: Strings.usageRate.uppercased()) {
-            HStack(spacing: 16) {
+            VStack(spacing: 12) {
               TextField("0.00", text: $store.usageRate)
                 .keyboardType(.decimalPad)
                 .font(.system(size: 16, weight: .medium))
                 .padding(.horizontal, 16)
                 .frame(height: 56)
-                .frame(maxWidth: .infinity)
                 .background(
                   RoundedRectangle(cornerRadius: 24)
                     .fill(inputBackgroundColor)
                     .shadow(color: .black.opacity(0.03), radius: 2, x: 0, y: 2)
                 )
 
-              // Period segmented control
+              // Period segmented control - full width
               HStack(spacing: 0) {
                 ForEach(store.usageRatePeriods, id: \.id) { period in
                   let isSelected = period.id == store.selectedUsageRatePeriodId
@@ -164,16 +159,16 @@ public struct AddDeviceView: View {
                     store.selectedUsageRatePeriodId = period.id!
                   } label: {
                     Text(period.localizedName.capitalized)
-                      .font(.system(size: 12, weight: .semibold))
+                      .font(.system(size: 13, weight: .semibold))
                       .foregroundStyle(
                         isSelected ? Color(hex: 0x0058BC) : Color(hex: 0x414755).opacity(0.6)
                       )
-                      .padding(.horizontal, isSelected ? 16 : 12)
-                      .padding(.vertical, 8)
+                      .frame(maxWidth: .infinity)
+                      .padding(.vertical, 10)
                       .background(
                         Group {
                           if isSelected {
-                            RoundedRectangle(cornerRadius: 10)
+                            RoundedRectangle(cornerRadius: 12)
                               .fill(colorScheme == .dark ? Color(white: 0.25) : .white)
                               .shadow(color: .black.opacity(0.05), radius: 1, x: 0, y: 1)
                           }
@@ -183,8 +178,9 @@ public struct AddDeviceView: View {
                 }
               }
               .padding(4)
+              .frame(height: 48)
               .background(
-                RoundedRectangle(cornerRadius: 24)
+                RoundedRectangle(cornerRadius: 16)
                   .fill(inputBackgroundColor)
                   .shadow(color: .black.opacity(0.03), radius: 2, x: 0, y: 2)
               )
