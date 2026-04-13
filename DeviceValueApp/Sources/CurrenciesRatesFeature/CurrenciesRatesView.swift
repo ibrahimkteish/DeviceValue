@@ -111,20 +111,19 @@ public struct CurrenciesRatesView: View {
           .font(.system(size: 16, weight: .semibold))
           .foregroundStyle(.white)
           .frame(maxWidth: .infinity)
-          .frame(height: 50)
+          .padding(.vertical, 14)
           .background(
-            RoundedRectangle(cornerRadius: 16)
-              .fill(
-                LinearGradient(
-                  colors: [Color.brandBlue, Color.brandBlueLight],
-                  startPoint: .topLeading,
-                  endPoint: .bottomTrailing
-                )
-              )
+            LinearGradient(
+              colors: [Color.brandBlue, Color.brandBlueLight],
+              startPoint: .leading,
+              endPoint: .trailing
+            ),
+            in: RoundedRectangle(cornerRadius: 16)
           )
       }
       .padding(.horizontal, 24)
-      .padding(.bottom, 8)
+      .padding(.vertical, 16)
+      .background(Color(.systemBackground))
     }
   }
 
