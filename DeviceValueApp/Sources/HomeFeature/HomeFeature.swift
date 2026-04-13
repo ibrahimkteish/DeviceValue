@@ -10,9 +10,10 @@ import AnalyticsFeature
 import ComposableArchitecture
 import CurrenciesRatesFeature
 import Generated
+import GRDB
 import Models
 import SettingsFeature
-import SharingGRDB
+import SQLiteData
 
 public struct CurrencyCost: FetchableRecord, Decodable, Equatable, Sendable {
   let currencyCode: String
@@ -46,14 +47,14 @@ public struct HomeFeature: Sendable {
     @Presents
     public var destination: Destination.State?
 
-    @SharedReader(.fetch(Items(ordering: .created)))
-    public var devices: [Items.State]
+    @Fetch(Items(ordering: .created))
+    public var devices: [Items.State] = []
     @Shared(.inMemory("order"))
     var ordering: Ordering = .created
-    @SharedReader(.fetch(Aggregate()))
+    @Fetch(Aggregate())
     public var count: CurrencyCost? = nil
 
-    @SharedReader(.fetch(SettingsFeature.SettingsFetcher()))
+    @Fetch(SettingsFeature.SettingsFetcher())
     public var settingsWithCurrency: AppSettingsWithCurrency = .init()
 
     var path = StackState<Path.State>()
@@ -89,7 +90,8 @@ public struct HomeFeature: Sendable {
     }
   }
 
-  public struct Items: FetchKeyRequest {
+  public struct Items: FetchKeyRequest, Hashable {
+    public typealias Value = [State]
     public let ordering: Ordering
     public struct State: Equatable, Sendable {
 
@@ -130,11 +132,11 @@ public struct HomeFeature: Sendable {
     }
   }
 
-  public struct Aggregate: FetchKeyRequest {
+  public struct Aggregate: FetchKeyRequest, Hashable {
 
-    public typealias State = CurrencyCost?
+    public typealias Value = CurrencyCost?
 
-    public func fetch(_ db: Database) throws -> State {
+    public func fetch(_ db: Database) throws -> CurrencyCost? {
       // First get the default currency from settings
       let settingsRow = try Row.fetchOne(db, sql: "SELECT defaultCurrencyId FROM app_settings LIMIT 1")
 
@@ -254,7 +256,7 @@ public struct HomeFeature: Sendable {
         case let .onSortChanged(newSort):
           state.$ordering.withLock { $0 = newSort }
           return .run { [state] _ in
-            try await state.$devices.load(.fetch(HomeFeature.Items(ordering: state.ordering)))
+            try await state.$devices.load(HomeFeature.Items(ordering: state.ordering))
           }
         case let .path(.element(id: _, action: .settings(.delegate(delAction)))):
           switch delAction {

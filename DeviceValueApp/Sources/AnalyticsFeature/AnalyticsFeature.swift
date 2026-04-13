@@ -1,19 +1,20 @@
 import ComposableArchitecture
 import Foundation
+import GRDB
 import Models
-import SharingGRDB
+import SQLiteData
 
 @Reducer
 public struct Analytics: Sendable {
   @ObservableState
   public struct State: Equatable, Sendable {
-    @SharedReader(.fetch(PortfolioMetricsRequest()))
-    public var portfolioMetrics: PortfolioMetrics?
-    @SharedReader(.fetch(UsageMetricsRequest()))
-    public var usage: UsageMetrics?
-    @SharedReader(.fetch(DeviceUsageMetricsRequest()))
+    @Fetch(PortfolioMetricsRequest())
+    public var portfolioMetrics: PortfolioMetrics? = nil
+    @Fetch(UsageMetricsRequest())
+    public var usage: UsageMetrics? = nil
+    @Fetch(DeviceUsageMetricsRequest())
     public var devices: [DeviceUsageMetrics] = []
-    @SharedReader(.fetch(DefaultCurrencyRequest()))
+    @Fetch(DefaultCurrencyRequest())
     public var defaultCurrency: String = "$"
 
     public init() {}
@@ -51,7 +52,7 @@ public struct Analytics: Sendable {
     case binding(BindingAction<State>)
   }
 
-  public struct DeviceUsageMetricsRequest: FetchKeyRequest {
+  public struct DeviceUsageMetricsRequest: FetchKeyRequest, Hashable {
     public init() {}
 
     public func fetch(_ db: Database) throws -> [DeviceUsageMetrics] {
@@ -88,7 +89,7 @@ public struct Analytics: Sendable {
     }
   }
 
-  public struct UsageMetricsRequest: FetchKeyRequest {
+  public struct UsageMetricsRequest: FetchKeyRequest, Hashable {
     public init() {}
 
     public func fetch(_ db: Database) throws -> UsageMetrics? {
@@ -150,7 +151,7 @@ public struct Analytics: Sendable {
     }
   }
 
-  public struct PortfolioMetricsRequest: FetchKeyRequest {
+  public struct PortfolioMetricsRequest: FetchKeyRequest, Hashable {
 
     public func fetch(_ db: Database) throws -> PortfolioMetrics? {
       // First get the default currency
@@ -240,8 +241,8 @@ public struct Analytics: Sendable {
     }
   }
 
-  public struct DefaultCurrencyRequest: FetchKeyRequest {
-    public typealias State = String
+  public struct DefaultCurrencyRequest: FetchKeyRequest, Hashable {
+    public typealias Value = String
 
     public init() {}
 

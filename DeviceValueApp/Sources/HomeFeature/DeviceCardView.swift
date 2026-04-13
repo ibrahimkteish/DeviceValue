@@ -17,23 +17,6 @@ public struct DeviceCardView: View {
   @State private var isPressed: Bool = false
   @Environment(\.colorScheme) private var colorScheme
 
-  // Neumorphic colors based on color scheme
-  private var surfaceColor: Color {
-    self.colorScheme == .dark ? Color(white: 0.2) : Color(white: 0.93)
-  }
-
-  private var shadowColor: Color {
-    self.colorScheme == .dark ? Color(white: 0.1) : Color(white: 0.85)
-  }
-
-  private var highlightColor: Color {
-    self.colorScheme == .dark ? Color(white: 0.3) : .white
-  }
-
-  private var innerShadowColor: Color {
-    self.colorScheme == .dark ? .black.opacity(0.5) : .gray.opacity(0.3)
-  }
-
   init(data: HomeFeature.Items.State) {
     self.data = data
   }
@@ -59,196 +42,134 @@ public struct DeviceCardView: View {
     min(self.accumulatedCost / self.data.device.purchasePrice, 1.0)
   }
 
-  // Dynamic gradient based on progress
-  var progressGradient: LinearGradient {
-    if self.progress >= 1.0 {
-      return LinearGradient(
-        colors: [.green, .green.opacity(0.7)],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-      )
-    } else {
-      return LinearGradient(
-        colors: [.blue, .blue.opacity(0.7)],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-      )
-    }
+  var progressColor: Color {
+    self.progress >= 1.0 ? Color(hex: 0x006E28) : Color(hex: 0x0058BC)
   }
 
-  var progressColor: Color {
-    self.progress >= 1.0 ? .green : .accentColor
+  // Formatted usage rate string
+  var usageRateString: String {
+    let formatted = data.device.usageRate.formatted(.currency(code: data.currency.code))
+    return "\(formatted)/\(data.usageRatePeriod.name)"
+  }
+
+  // Remaining days
+  var remainingDaysCount: Int {
+    let perDay = data.device.usageRate / Double(data.usageRatePeriod.daysMultiplier)
+    guard perDay > 0 else { return 0 }
+    return max(Int((data.device.purchasePrice / perDay) - Double(data.device.elapsedDays)), 0)
   }
 
   // MARK: - View Components
 
   @ViewBuilder
-  private var deviceNameView: some View {
-    Text(data.device.name)
-      .font(.title2.bold())
-      .foregroundStyle(.primary)
+  private var deviceNameRow: some View {
+    HStack(spacing: 8) {
+      Image(systemName: deviceIconName)
+        .font(.system(size: 14))
+        .foregroundStyle(Color(hex: 0x0058BC))
+      Text(data.device.name)
+        .font(.system(size: 18, weight: .heavy))
+        .foregroundStyle(Color(hex: 0x1A1B1F))
+    }
   }
 
-  @ViewBuilder
-  private var purchaseInfoView: some View {
-    Text(Strings.purchasedFor(data.device.purchasePrice.formatted(.currency(code: data.currency.code))))
-      .font(.subheadline)
-      .foregroundStyle(.secondary)
-  }
-
-  @ViewBuilder
-  private var usagePeriodView: some View {
-    Text(
-      Strings.usedFor(
-        data.device.elapsedDays,
-        String(format: "%.1f", elapsedPeriodCount),
-        data.usageRatePeriod.localizedName
-      )
-    )
-    .font(.subheadline)
-    .foregroundStyle(.secondary)
-  }
-
-  @ViewBuilder
-  private var rateView: some View {
-    Text(
-      Strings
-        .rate(data.device.usageRate.formatted(.currency(code: data.currency.code)), data.usageRatePeriod.name)
-    )
-    .font(.subheadline)
-    .foregroundStyle(.secondary)
-  }
-
-  @ViewBuilder
-  private var remainingDays: some View {
-    let perDay = Double(data.device.usageRate / Double(data.usageRatePeriod.daysMultiplier))
-    let days = (data.device.purchasePrice / perDay) - Double(data.device.elapsedDays)
-    if days > 0 {
-      Text(Strings.remainingDays(days.formatted(.number)))
-        .font(.subheadline)
-        .foregroundStyle(.secondary)
+  private var deviceIconName: String {
+    let name = data.device.name.lowercased()
+    if name.contains("iphone") || name.contains("phone") {
+      return "iphone"
+    } else if name.contains("macbook") || name.contains("laptop") {
+      return "laptopcomputer"
+    } else if name.contains("ipad") || name.contains("tablet") {
+      return "ipad"
+    } else if name.contains("watch") {
+      return "applewatch"
+    } else if name.contains("airpod") || name.contains("headphone") {
+      return "headphones"
+    } else {
+      return "desktopcomputer"
     }
   }
 
   @ViewBuilder
-  private var remainingCostView: some View {
-    Text(Strings.remainingCost(remainingCost.formatted(.currency(code: data.currency.code))))
-      .font(.headline)
-      .foregroundStyle(progressColor)
-  }
-
-  @ViewBuilder
-  private var deviceInfoStack: some View {
-    VStack(alignment: .leading, spacing: 8) {
-      deviceNameView
-        .padding(.trailing, 60)
-      purchaseInfoView
-      usagePeriodView
-      rateView
-      remainingDays
-      remainingCostView
+  private var metricsGrid: some View {
+    Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 12) {
+      GridRow {
+        metricCell(
+          label: Strings.purchasePrice.uppercased(),
+          value: data.device.purchasePrice.formatted(.currency(code: data.currency.code)),
+          valueColor: Color(hex: 0x1A1B1F)
+        )
+        metricCell(
+          label: Strings.usageRate.uppercased(),
+          value: usageRateString,
+          valueColor: Color(hex: 0x006E28)
+        )
+      }
+      GridRow {
+        metricCell(
+          label: "DAYS USED",
+          value: "\(data.device.elapsedDays) \(Strings.days)",
+          valueColor: Color(hex: 0x1A1B1F)
+        )
+        metricCell(
+          label: "REMAINING",
+          value: remainingCost.formatted(.currency(code: data.currency.code)),
+          valueColor: Color(hex: 0x894D00)
+        )
+      }
     }
   }
 
   @ViewBuilder
-  private var cardBackground: some View {
-    ZStack {
-      // Base layer
-      RoundedRectangle(cornerRadius: 16)
-        .fill(surfaceColor)
-        .overlay {
-          if !isPressed {
-            // Outset effect
-            LinearGradient(
-              colors: [
-                highlightColor.opacity(0.5),
-                shadowColor.opacity(0.5)
-              ],
-              startPoint: .topLeading,
-              endPoint: .bottomTrailing
-            )
-            .opacity(0.2)
-          } else {
-            // Inset effect
-            LinearGradient(
-              colors: [
-                shadowColor.opacity(0.5),
-                highlightColor.opacity(0.5)
-              ],
-              startPoint: .topLeading,
-              endPoint: .bottomTrailing
-            )
-            .opacity(0.2)
-          }
-        }
+  private func metricCell(label: String, value: String, valueColor: Color) -> some View {
+    VStack(alignment: .leading, spacing: 0) {
+      Text(label)
+        .font(.system(size: 10, weight: .semibold))
+        .tracking(0.5)
+        .foregroundStyle(Color(hex: 0x414755))
+      Text(value)
+        .font(.system(size: 16, weight: .bold, design: .default))
+        .foregroundStyle(valueColor)
     }
+    .frame(maxWidth: .infinity, alignment: .leading)
   }
 
   @ViewBuilder
   private var progressCircle: some View {
     ZStack {
-      // Base circle with gradient overlay
       Circle()
-        .fill(surfaceColor)
-        .overlay {
-          Circle()
-            .fill(
-              LinearGradient(
-                colors: [
-                  highlightColor.opacity(0.5),
-                  shadowColor.opacity(0.5)
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-              )
-            )
-            .opacity(0.2)
-        }
+        .stroke(progressColor.opacity(0.2), style: StrokeStyle(lineWidth: 3.5))
 
-      // Progress track
-      Circle()
-        .trim(from: 0, to: 1)
-        .stroke(
-          progressColor,
-          style: StrokeStyle(
-            lineWidth: 4,
-            lineCap: .round
-          )
-        )
-        .opacity(0.2)
-
-      // Progress indicator
       Circle()
         .trim(from: 0, to: progress)
-        .stroke(
-          progressColor,
-          style: StrokeStyle(
-            lineWidth: 4,
-            lineCap: .round
-          )
-        )
+        .stroke(progressColor, style: StrokeStyle(lineWidth: 3.5, lineCap: .round))
         .rotationEffect(.degrees(-90))
 
-      VStack(spacing: 2) {
-        Text("\(Int(progress * 100))%")
-          .font(.system(.subheadline, design: .rounded).bold())
-          .foregroundStyle(progressColor)
-        Text(Strings.used)
-          .font(.caption2)
-          .foregroundStyle(.secondary)
-      }
+      Text("\(Int(progress * 100))%")
+        .font(.system(size: 12, weight: .bold, design: .rounded))
+        .foregroundStyle(Color(hex: 0x1A1B1F))
     }
     .frame(width: 70, height: 70)
   }
 
   public var body: some View {
-    ZStack(alignment: .topTrailing) {
+    HStack(alignment: .center, spacing: 0) {
+      VStack(alignment: .leading, spacing: 16) {
+        deviceNameRow
+        metricsGrid
+      }
+      .frame(maxWidth: .infinity, alignment: .leading)
+
+      Spacer(minLength: 16)
+
       progressCircle
-      deviceInfoStack
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
-    .padding(20)
-    .background(cardBackground)
+    .padding(24)
+    .background(
+      RoundedRectangle(cornerRadius: 24)
+        .fill(colorScheme == .dark ? Color(white: 0.15) : .white)
+        .shadow(color: .black.opacity(0.04), radius: 15, x: 0, y: 8)
+    )
     .scaleEffect(isPressed ? 0.98 : 1.0)
     .animation(.spring(response: 0.3), value: isPressed)
     .onTapGesture {
@@ -266,15 +187,15 @@ public struct DeviceCardView: View {
 
 #if DEBUG
 #Preview {
-  VStack {
+  VStack(spacing: 16) {
     DeviceCardView(
       data: .init(
         device: .init(
-          name: "Sennheiser PXC 550",
+          name: "iPhone 15 Pro",
           currencyId: 1,
-          purchasePrice: 500,
-          purchaseDate: Date(year: 2017, month: 6, day: 15),
-          usageRate: 0.5,
+          purchasePrice: 999,
+          purchaseDate: Date(year: 2024, month: 1, day: 1),
+          usageRate: 1.25,
           usageRatePeriodId: 1
         ),
         currency: .usd,
@@ -285,34 +206,20 @@ public struct DeviceCardView: View {
     DeviceCardView(
       data: .init(
         device: .init(
-          name: "iPhone 13 Pro",
+          name: "MacBook Air M2",
           currencyId: 1,
-          purchasePrice: 1599.99,
-          purchaseDate: Date(year: 2022, month: 9, day: 16),
-          usageRate: 7,
-          usageRatePeriodId: 2
+          purchasePrice: 1199,
+          purchaseDate: Date(year: 2023, month: 6, day: 15),
+          usageRate: 1.10,
+          usageRatePeriodId: 1
         ),
         currency: .usd,
-        usageRatePeriod: .week
-      )
-    )
-
-    DeviceCardView(
-      data: .init(
-        device: .init(
-          name: "MacBook Pro",
-          currencyId: 1,
-          purchasePrice: 1599.99,
-          purchaseDate: Date(year: 2022, month: 9, day: 16),
-          usageRate: 30,
-          usageRatePeriodId: 3
-        ),
-        currency: .usd,
-        usageRatePeriod: .month
+        usageRatePeriod: .day
       )
     )
   }
-  .preferredColorScheme(.dark)
+  .padding(24)
+  .background(Color(hex: 0xFAF9FE))
 }
 #endif
 

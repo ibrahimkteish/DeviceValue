@@ -7,7 +7,7 @@ import ComposableArchitecture
 import Foundation
 import GRDB
 import Models
-import SharingGRDB
+import SQLiteData
 import UIApplicationClient
 import UIKit
 
@@ -26,8 +26,8 @@ public struct AppSettingsWithCurrency: Equatable, Sendable {
 public struct SettingsFeature: Sendable {
 
   // Define a FetchKeyRequest for settings
-  public struct SettingsFetcher: FetchKeyRequest {
-    public typealias State = AppSettingsWithCurrency
+  public struct SettingsFetcher: FetchKeyRequest, Hashable {
+    public typealias Value = AppSettingsWithCurrency
 
     public init() {}
 
@@ -47,13 +47,20 @@ public struct SettingsFeature: Sendable {
     }
   }
 
+  public struct AvailableCurrenciesRequest: FetchKeyRequest, Hashable {
+    public typealias Value = [Currency]
+    public init() {}
+    public func fetch(_ db: Database) throws -> [Currency] {
+      try Currency.fetchAll(db, sql: "SELECT * from currencies ORDER BY code = 'USD' DESC, name")
+    }
+  }
+
   @ObservableState
   public struct State: Equatable, Sendable {
-    @SharedReader(.fetch(SettingsFetcher()))
-    public var settingsWithCurrency: AppSettingsWithCurrency = .init()
+    @Fetch(SettingsFetcher())
+    public var settingsWithCurrency = AppSettingsWithCurrency()
 
-    @SharedReader(.fetchAll(sql: "SELECT * from currencies ORDER BY code = 'USD' DESC, name", animation: .default))
-    public var availableCurrencies: [Currency]
+    @FetchAll public var availableCurrencies: [Currency]
 
     public var presentation = SettingsPresentation(
       appTheme: .dark,

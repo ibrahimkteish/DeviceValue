@@ -7,7 +7,7 @@ import Foundation
 import Generated
 import GRDB
 import Models
-import SharingGRDB
+import SQLiteData
 
 extension UsageRatePeriod {
   var localizedName: String {
@@ -23,6 +23,20 @@ extension UsageRatePeriod {
       default:
         return "day"
     }
+  }
+}
+
+struct CurrenciesFetchRequest: FetchKeyRequest, Hashable {
+  typealias Value = [Currency]
+  func fetch(_ db: Database) throws -> [Currency] {
+    try Currency.fetchAll(db, sql: "SELECT * from \(Currency.databaseTableName)")
+  }
+}
+
+struct UsageRatePeriodsFetchRequest: FetchKeyRequest, Hashable {
+  typealias Value = [UsageRatePeriod]
+  func fetch(_ db: Database) throws -> [UsageRatePeriod] {
+    try UsageRatePeriod.fetchAll(db, sql: "SELECT * from \(UsageRatePeriod.databaseTableName)")
   }
 }
 
@@ -53,11 +67,9 @@ public struct AddDeviceFeature: Sendable {
     var selectedUsageRatePeriodId: Int64
     var mode: Mode
 
-    @SharedReader(.fetchAll(sql: "SELECT * from \(Currency.databaseTableName)", animation: .default))
-    public var currencies: [Currency]
+    @FetchAll public var currencies: [Currency]
 
-    @SharedReader(.fetchAll(sql: "SELECT * from \(UsageRatePeriod.databaseTableName)", animation: .default))
-    public var usageRatePeriods: [UsageRatePeriod]
+    @FetchAll public var usageRatePeriods: [UsageRatePeriod]
 
     var isValid: Bool {
       !self.deviceName.isEmpty &&

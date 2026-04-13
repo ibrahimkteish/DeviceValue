@@ -1,15 +1,21 @@
 import ComposableArchitecture
 import Generated
 import Models
-import SharingGRDB
+import SQLiteData
 import SwiftUI
+import Utils
 
 public struct CurrenciesRatesView: View {
   @Bindable var store: StoreOf<CurrenciesRatesFeature>
   @Environment(\.dismiss) private var dismiss
+  @Environment(\.colorScheme) private var colorScheme
 
   public init(store: StoreOf<CurrenciesRatesFeature>) {
     self.store = store
+  }
+
+  private var backgroundColor: Color {
+    colorScheme == .dark ? Color(.systemBackground) : Color(hex: 0xFAF9FE)
   }
 
   @ViewBuilder
@@ -20,10 +26,9 @@ public struct CurrenciesRatesView: View {
   }
 
   public var body: some View {
-    VStack {
+    VStack(spacing: 0) {
       List {
         if store.currencies.isEmpty {
-          // Only show loading if there are actually currencies in the database but they're not loaded yet
           if store.totalCurrenciesCount > 0, store.searchTerm.isEmpty {
             Section {
               HStack {
@@ -38,7 +43,6 @@ public struct CurrenciesRatesView: View {
               }
             }
           } else if !store.searchTerm.isEmpty {
-            // Show "no results" message if searching and nothing found
             Section {
               Text(Strings.noCurrencyFound)
                 .foregroundColor(.secondary)
@@ -47,15 +51,44 @@ public struct CurrenciesRatesView: View {
             }
           }
         } else {
-          Section(header: Text(Strings.otherCurrencies)) {
+          // Base currency section
+          if let usd = store.currencies.first(where: { $0.code == "USD" }) {
+            Section {
+              baseCurrencyCard(usd)
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
+            } header: {
+              Text("BASE REFERENCE")
+                .font(.system(size: 14, weight: .bold))
+                .tracking(1.4)
+                .foregroundStyle(Color(hex: 0x414755))
+            }
+          }
+
+          // Live rates
+          Section {
             rates
+              .listRowInsets(EdgeInsets())
+              .listRowSeparator(.hidden)
+          } header: {
+            Text("LIVE RATES")
+              .font(.system(size: 14, weight: .bold))
+              .tracking(1.4)
+              .foregroundStyle(Color(hex: 0x414755))
           }
         }
       }
+      .listStyle(.plain)
+      .scrollContentBackground(.hidden)
+      .background(backgroundColor)
       .searchable(text: $store.searchTerm, prompt: Strings.searchCurrencies)
     }
+    .background(backgroundColor)
     .sheet(isPresented: $store.showingAddCurrency) {
       AddCurrencyView(store: store)
+        .presentationDetents([.medium])
+        .presentationDragIndicator(.visible)
+        .presentationCornerRadius(32)
     }
     .task {
       await store.send(.fetchCurrencyRates).finish()
@@ -79,57 +112,51 @@ public struct CurrenciesRatesView: View {
     }
   }
 
-//  @ViewBuilder
-//  private func currencyRow(_ currency: Currency) -> some View {
-//    HStack {
-//      VStack(alignment: .leading, spacing: 4) {
-//        HStack {
-//          Text(currency.symbol)
-//            .font(.headline)
-//            .foregroundColor(.primary)
-//          Text(currency.name)
-//            .font(.headline)
-//        }
-//        Text(currency.code)
-//          .font(.subheadline)
-//          .foregroundColor(.secondary)
-//      }
-//
-//      Spacer()
-//
-//      if currency.code == "USD" {
-//        Text(Strings.base)
-//          .foregroundColor(.secondary)
-//          .fontWeight(.medium)
-//      } else {
-//        let rateIndex = rates.firstIndex(where: { $0.0.id == currency.id })
-//        TextField("Rate", text: Binding(
-//          get: {
-//            if let index = rateIndex {
-//              return rates[index].1
-//            } else {
-//              return currency.usdRate.formatted(.number.precision(.fractionLength(0 ... 4)))
-//            }
-//          },
-//          set: { newValue in
-//            if let index = rateIndex {
-//              rates[index].1 = newValue
-//            } else {
-//              rates.append((currency, newValue))
-//            }
-//          }
-//        ))
-//        .keyboardType(.decimalPad)
-//        .multilineTextAlignment(.trailing)
-//        .frame(width: 100)
-//        .padding(8)
-//        .background(Color(.systemGray5))
-//        .cornerRadius(8)
-//      }
-//    }
-//    .padding(.vertical, 4)
+  @ViewBuilder
+  private func baseCurrencyCard(_ currency: Currency) -> some View {
+    HStack(spacing: 20) {
+      // Large symbol circle
+      ZStack {
+        Text(currency.symbol)
+          .font(.system(size: 24, weight: .semibold))
+          .foregroundStyle(.white)
+      }
+      .frame(width: 64, height: 64)
+      .background(
+        Circle()
+          .fill(
+            LinearGradient(
+              colors: [Color(hex: 0x0058BC), Color(hex: 0x0070EB)],
+              startPoint: .topLeading,
+              endPoint: .bottomTrailing
+            )
+          )
+          .shadow(
+            color: Color(hex: 0x0058BC).opacity(0.2),
+            radius: 8, x: 0, y: 4
+          )
+      )
 
-//  }
+      VStack(alignment: .leading, spacing: 0) {
+        Text(currency.code)
+          .font(.system(size: 12, weight: .semibold))
+          .tracking(0.6)
+          .foregroundStyle(Color(hex: 0x414755))
+          .textCase(.uppercase)
+        Text(currency.name)
+          .font(.system(size: 24, weight: .heavy))
+          .foregroundStyle(Color(hex: 0x1A1B1F))
+      }
+
+      Spacer()
+    }
+    .padding(24)
+    .background(
+      RoundedRectangle(cornerRadius: 24)
+        .fill(colorScheme == .dark ? Color(white: 0.12) : .white)
+        .shadow(color: .black.opacity(0.04), radius: 15, x: 0, y: 8)
+    )
+  }
 }
 
 #Preview {

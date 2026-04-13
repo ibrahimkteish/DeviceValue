@@ -1,7 +1,8 @@
 import ComposableArchitecture
 import Generated
+import GRDB
 import Models
-import SharingGRDB
+import SQLiteData
 import UIKit
 
 @Reducer
@@ -18,8 +19,8 @@ public struct CurrenciesRatesFeature: Sendable {
   }
 
   // Define a FetchKeyRequest for currencies with filtering
-  public struct CurrencyRequest: FetchKeyRequest {
-    public typealias State = [Currency]
+  public struct CurrencyRequest: FetchKeyRequest, Hashable {
+    public typealias Value = [Currency]
 
     public let searchTerm: String
 
@@ -50,6 +51,14 @@ public struct CurrenciesRatesFeature: Sendable {
     }
   }
 
+  public struct CurrencyCountRequest: FetchKeyRequest, Hashable {
+    public typealias Value = Int
+    public init() {}
+    public func fetch(_ db: Database) throws -> Int {
+      try Int.fetchOne(db, sql: "SELECT COUNT(*) FROM currencies") ?? 0
+    }
+  }
+
   @ObservableState
   public struct State: Equatable, Sendable {
     @Presents
@@ -58,10 +67,10 @@ public struct CurrenciesRatesFeature: Sendable {
     @Shared(.inMemory("currency_search"))
     var searchTerm: String = ""
 
-    @SharedReader(.fetch(CurrencyRequest()))
-    public var currencies: [Currency]
+    @Fetch(CurrencyRequest())
+    public var currencies: [Currency] = []
 
-    @SharedReader(.fetchOne(sql: "SELECT COUNT(*) FROM currencies"))
+    @Fetch(CurrencyCountRequest())
     public var totalCurrenciesCount: Int = 0
 
     public var showingAddCurrency = false
@@ -102,7 +111,7 @@ public struct CurrenciesRatesFeature: Sendable {
         case .binding(\.searchTerm):
           let newFilterTerm = state.searchTerm
           return .run { [state] send in
-            try await state.$currencies.load(.fetch(CurrencyRequest(searchTerm: newFilterTerm)))
+            try await state.$currencies.load(CurrencyRequest(searchTerm: newFilterTerm))
             await send(.fetchedRates)
           }
 
@@ -110,7 +119,7 @@ public struct CurrenciesRatesFeature: Sendable {
           return .none
         case .fetchCurrencyRates:
           return .run { [state] send in
-            try await state.$currencies.load(.fetch(CurrencyRequest(searchTerm: state.searchTerm)))
+            try await state.$currencies.load(CurrencyRequest(searchTerm: state.searchTerm))
             for await _ in state.$currencies.publisher.values {
               await send(.fetchedRates)
             }

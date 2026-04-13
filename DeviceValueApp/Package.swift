@@ -57,11 +57,11 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/pointfreeco/swift-composable-architecture",
-            from: "1.17.1"
+            from: "1.23.1"
         ),
         .package(
           url: "https://github.com/pointfreeco/swift-dependencies",
-          from: "1.7.0"
+          from: "1.10.0"
         ),
         .package(
             url: "https://github.com/groue/GRDB.swift",
@@ -70,6 +70,10 @@ let package = Package(
         .package(
             url: "https://github.com/pointfreeco/sharing-grdb",
             from: "0.1.0"
+        ),
+        .package(
+            url: "https://github.com/pointfreeco/sqlite-data",
+            from: "1.0.0"
         ),
     ],
     targets: [
@@ -84,7 +88,7 @@ let package = Package(
                 "Utils",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "SharingGRDB", package: "sharing-grdb"),
+                .product(name: "SQLiteData", package: "sqlite-data"),
             ]
         ),
         .target(name:"BuildClient", dependencies: [
@@ -110,16 +114,18 @@ let package = Package(
                 "SettingsFeature",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "GRDB", package: "GRDB.swift"),
+                .product(name: "SQLiteData", package: "sqlite-data"),
             ]
         ),
         .target(
             name: "AnalyticsFeature",
             dependencies: [
+                "Generated",
                 "Models",
                 "Utils",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "SharingGRDB", package: "sharing-grdb"),
+                .product(name: "SQLiteData", package: "sqlite-data"),
             ]
         ),
         .target(
@@ -130,14 +136,14 @@ let package = Package(
                 "Utils",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "SharingGRDB", package: "sharing-grdb"),
+                .product(name: "SQLiteData", package: "sqlite-data"),
             ]
         ),
         .target(
             name: "Models",
             dependencies: [
                 "Utils",
-                .product(name: "SharingGRDB", package: "sharing-grdb"),
+                .product(name: "SQLiteData", package: "sqlite-data"),
             ]
         ),
 
@@ -151,7 +157,7 @@ let package = Package(
                 "UIApplicationClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "SharingGRDB", package: "sharing-grdb"),
+                .product(name: "SQLiteData", package: "sqlite-data"),
             ]
         ),
         

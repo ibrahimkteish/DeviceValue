@@ -1,52 +1,80 @@
 import ComposableArchitecture
 import Generated
 import SwiftUI
+import Utils
 
 public struct CurrencyRateView: View {
   @Bindable var store: StoreOf<CurrencyRateFeature>
+  @Environment(\.colorScheme) private var colorScheme
 
   public init(store: StoreOf<CurrencyRateFeature>) {
     self.store = store
   }
 
   public var body: some View {
-    HStack {
-      VStack(alignment: .leading, spacing: 4) {
-        HStack {
-          Text(store.currency.symbol)
-            .font(.headline)
-            .foregroundColor(.primary)
-          Text(store.currency.name)
-            .font(.headline)
-        }
+    HStack(spacing: 16) {
+      // Currency symbol circle
+      ZStack {
+        Text(store.currency.symbol)
+          .font(.system(size: 20, weight: .semibold))
+          .foregroundStyle(Color(hex: 0x1A1B1F))
+      }
+      .frame(width: 48, height: 48)
+      .background(
+        RoundedRectangle(cornerRadius: 24)
+          .fill(colorScheme == .dark ? Color(white: 0.2) : Color(hex: 0xEEEDF3))
+      )
+
+      // Currency info
+      VStack(alignment: .leading, spacing: 0) {
         Text(store.currency.code)
-          .font(.subheadline)
-          .foregroundColor(.secondary)
+          .font(.system(size: 10, weight: .semibold))
+          .foregroundStyle(Color(hex: 0x414755).opacity(0.7))
+          .textCase(.uppercase)
+        Text(store.currency.name)
+          .font(.system(size: 16, weight: .bold))
+          .foregroundStyle(Color(hex: 0x1A1B1F))
       }
 
       Spacer()
 
       if store.currency.code == "USD" {
-        Text(Strings.base)
-          .foregroundColor(.secondary)
-          .fontWeight(.medium)
+        Text(Strings.base.uppercased())
+          .font(.system(size: 10, weight: .semibold))
+          .tracking(-0.5)
+          .foregroundStyle(Color(hex: 0x0058BC))
+          .padding(.horizontal, 12)
+          .padding(.vertical, 2.5)
+          .background(
+            Capsule()
+              .fill(Color(hex: 0x0058BC).opacity(0.1))
+          )
       } else {
-        VStack(alignment: .trailing) {
+        // Rate input
+        ZStack(alignment: .leading) {
           TextField("", text: $store.usdRate)
             .keyboardType(.decimalPad)
             .multilineTextAlignment(.trailing)
-            .padding(4)
-            .frame(width: 100)
-            .background(Color(.systemGray5), in: RoundedRectangle(cornerRadius: 8))
+            .font(.system(size: 16, weight: .bold))
+            .foregroundStyle(Color(hex: 0x0058BC))
+            .padding(.leading, 32)
+            .padding(.trailing, 12)
+            .padding(.vertical, 8)
+            .frame(width: 96)
+            .background(
+              RoundedRectangle(cornerRadius: 8)
+                .fill(colorScheme == .dark ? Color(white: 0.2) : Color(hex: 0xE9E7ED))
+            )
 
-          Text(self.store.currency.usdRate.formatted(.currency(code: store.currency.code)))
-            .foregroundColor(.secondary)
-            .fontWeight(.medium)
-
+          Text("Rate")
+            .font(.system(size: 12, weight: .semibold))
+            .foregroundStyle(Color(hex: 0x414755).opacity(0.4))
+            .padding(.leading, 12)
         }
       }
     }
-    .padding(.vertical, 4)
+    .padding(20)
+    .background(colorScheme == .dark ? Color(white: 0.12) : .white)
     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
       if store.currency.code != "USD" {
         Button(role: .destructive) {
