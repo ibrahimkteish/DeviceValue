@@ -23,8 +23,8 @@ extension IdentifiedArrayOf<Acknowledgement> {
       url: URL(string: "https://github.com/groue/GRDB.swift")!
     ),
     .init(
-      name: "Sharing GRDB",
-      url: URL(string: "https://github.com/pointfreeco/sharing-grdb")!
+      name: "SQLite Data",
+      url: URL(string: "https://github.com/pointfreeco/sqlite-data")!
     )
   ]
 }
