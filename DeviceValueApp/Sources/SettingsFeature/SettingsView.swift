@@ -95,7 +95,8 @@ public struct SettingsView: View {
           }
           .background(
             RoundedRectangle(cornerRadius: 12)
-              .fill(separatorColor)
+              .fill(Color(.secondarySystemGroupedBackground))
+              .shadow(color: .black.opacity(0.04), radius: 8, x: 0, y: 2)
           )
           .clipShape(RoundedRectangle(cornerRadius: 12))
         }
@@ -129,7 +130,8 @@ public struct SettingsView: View {
           }
           .background(
             RoundedRectangle(cornerRadius: 12)
-              .fill(separatorColor)
+              .fill(Color(.secondarySystemGroupedBackground))
+              .shadow(color: .black.opacity(0.04), radius: 8, x: 0, y: 2)
           )
           .clipShape(RoundedRectangle(cornerRadius: 12))
         }
