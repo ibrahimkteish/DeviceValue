@@ -12,15 +12,11 @@ public struct SettingsView: View {
   }
 
   private var backgroundColor: Color {
-    Color(.systemBackground)
+    Color(.systemGroupedBackground)
   }
 
   private var cardBackground: Color {
     Color(.secondarySystemGroupedBackground)
-  }
-
-  private var separatorColor: Color {
-    Color(.secondarySystemBackground)
   }
 
   public var body: some View {
@@ -96,7 +92,11 @@ public struct SettingsView: View {
           .background(
             RoundedRectangle(cornerRadius: 12)
               .fill(Color(.secondarySystemGroupedBackground))
-              .shadow(color: .black.opacity(0.04), radius: 8, x: 0, y: 2)
+              .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                  .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+              )
+              .shadow(color: .black.opacity(0.06), radius: 6, x: 0, y: 2)
           )
           .clipShape(RoundedRectangle(cornerRadius: 12))
         }
@@ -131,7 +131,11 @@ public struct SettingsView: View {
           .background(
             RoundedRectangle(cornerRadius: 12)
               .fill(Color(.secondarySystemGroupedBackground))
-              .shadow(color: .black.opacity(0.04), radius: 8, x: 0, y: 2)
+              .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                  .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+              )
+              .shadow(color: .black.opacity(0.06), radius: 6, x: 0, y: 2)
           )
           .clipShape(RoundedRectangle(cornerRadius: 12))
         }
