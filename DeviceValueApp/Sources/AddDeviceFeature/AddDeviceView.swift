@@ -37,23 +37,56 @@ public struct AddDeviceView: View {
         VStack(spacing: 24) {
           // Currency
           fieldGroup(label: Strings.currency.uppercased()) {
-            Picker(selection: $store.selectedCurrencyId) {
-              ForEach(store.currencies, id: \.id) { currency in
-                Text("\(currency.code) - \(currency.symbol) - \(currency.name)")
-                  .tag(currency.id!)
+            VStack(spacing: 8) {
+              if store.currencies.isEmpty {
+                HStack {
+                  Text(Strings.loadingCurrencies)
+                    .foregroundStyle(Color(hex: 0x414755))
+                  Spacer()
+                  Button {
+                    store.send(.addCurrencyTapped)
+                  } label: {
+                    Text(Strings.addCurrency)
+                      .foregroundStyle(Color(hex: 0x0058BC))
+                  }
+                }
+                .padding(.horizontal, 16)
+                .frame(height: 56)
+                .background(
+                  RoundedRectangle(cornerRadius: 24)
+                    .fill(inputBackgroundColor)
+                )
+              } else {
+                Picker(selection: $store.selectedCurrencyId) {
+                  ForEach(store.currencies, id: \.id) { currency in
+                    Text("\(currency.code) - \(currency.symbol) - \(currency.name)")
+                      .tag(currency.id!)
+                  }
+                } label: {
+                  EmptyView()
+                }
+                .pickerStyle(.menu)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(height: 56)
+                .padding(.horizontal, 16)
+                .background(
+                  RoundedRectangle(cornerRadius: 24)
+                    .fill(inputBackgroundColor)
+                    .shadow(color: .black.opacity(0.03), radius: 2, x: 0, y: 2)
+                )
+
+                Button {
+                  store.send(.addCurrencyTapped)
+                } label: {
+                  HStack(spacing: 6) {
+                    Image(systemName: "plus.circle.fill")
+                    Text(Strings.addCurrency)
+                  }
+                  .font(.system(size: 13, weight: .semibold))
+                  .foregroundStyle(Color(hex: 0x0058BC))
+                }
               }
-            } label: {
-              EmptyView()
             }
-            .pickerStyle(.menu)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: 56)
-            .padding(.horizontal, 16)
-            .background(
-              RoundedRectangle(cornerRadius: 24)
-                .fill(inputBackgroundColor)
-                .shadow(color: .black.opacity(0.03), radius: 2, x: 0, y: 2)
-            )
           }
 
           // Device Name
