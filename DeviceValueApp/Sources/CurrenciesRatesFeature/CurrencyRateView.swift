@@ -50,25 +50,22 @@ public struct CurrencyRateView: View {
           )
       } else {
         // Rate input
-        ZStack(alignment: .leading) {
-          TextField("", text: $store.usdRate)
+        VStack(alignment: .trailing, spacing: 2) {
+          Text("Rate")
+            .font(.system(size: 10, weight: .semibold))
+            .foregroundStyle(.secondary)
+          TextField("0.00", text: $store.usdRate)
             .keyboardType(.decimalPad)
             .multilineTextAlignment(.trailing)
             .font(.system(size: 16, weight: .bold))
             .foregroundStyle(Color.brandBlue)
-            .padding(.leading, 32)
-            .padding(.trailing, 12)
+            .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .frame(width: 96)
+            .frame(width: 110)
             .background(
-              RoundedRectangle(cornerRadius: 8)
+              RoundedRectangle(cornerRadius: 10)
                 .fill(Color(.secondarySystemBackground))
             )
-
-          Text("Rate")
-            .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(.secondary.opacity(0.4))
-            .padding(.leading, 12)
         }
       }
     }
