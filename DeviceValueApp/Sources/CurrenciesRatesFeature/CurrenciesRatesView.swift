@@ -95,35 +95,19 @@ public struct CurrenciesRatesView: View {
     .navigationTitle(Strings.currencyRates)
     .navigationBarTitleDisplayMode(.inline)
     .toolbar {
-      ToolbarItem(placement: .topBarTrailing) {
+      ToolbarItem(placement: .topBarLeading) {
         Button {
           store.send(.addCurrencyButtonTapped)
         } label: {
           Image(systemName: "plus")
         }
       }
-    }
-    .safeAreaInset(edge: .bottom) {
-      Button {
-        store.send(.updateRates)
-      } label: {
-        Text(Strings.save)
-          .font(.system(size: 16, weight: .semibold))
-          .foregroundStyle(.white)
-          .frame(maxWidth: .infinity)
-          .padding(.vertical, 14)
-          .background(
-            LinearGradient(
-              colors: [Color.brandBlue, Color.brandBlueLight],
-              startPoint: .leading,
-              endPoint: .trailing
-            ),
-            in: RoundedRectangle(cornerRadius: 16)
-          )
+      ToolbarItem(placement: .topBarTrailing) {
+        Button(Strings.save) {
+          store.send(.updateRates)
+        }
+        .fontWeight(.semibold)
       }
-      .padding(.horizontal, 24)
-      .padding(.vertical, 16)
-      .background(Color(.systemBackground))
     }
   }
 
