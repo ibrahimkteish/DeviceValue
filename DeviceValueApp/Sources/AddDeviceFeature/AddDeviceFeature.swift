@@ -67,9 +67,9 @@ public struct AddDeviceFeature: Sendable {
     var selectedUsageRatePeriodId: Int64
     var mode: Mode
 
-    @FetchAll public var currencies: [Currency]
+    @Fetch(CurrenciesFetchRequest()) public var currencies: [Currency] = []
 
-    @FetchAll public var usageRatePeriods: [UsageRatePeriod]
+    @Fetch(UsageRatePeriodsFetchRequest()) public var usageRatePeriods: [UsageRatePeriod] = []
 
     var isValid: Bool {
       !self.deviceName.isEmpty &&

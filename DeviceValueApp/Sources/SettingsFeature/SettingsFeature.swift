@@ -60,7 +60,7 @@ public struct SettingsFeature: Sendable {
     @Fetch(SettingsFetcher())
     public var settingsWithCurrency = AppSettingsWithCurrency()
 
-    @FetchAll public var availableCurrencies: [Currency]
+    @Fetch(AvailableCurrenciesRequest()) public var availableCurrencies: [Currency] = []
 
     public var presentation = SettingsPresentation(
       appTheme: .dark,
