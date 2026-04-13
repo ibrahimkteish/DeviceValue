@@ -95,18 +95,20 @@ public struct CurrenciesRatesView: View {
     .navigationTitle(Strings.currencyRates)
     .navigationBarTitleDisplayMode(.inline)
     .toolbar {
-      ToolbarItem(placement: .confirmationAction) {
-        Button(Strings.save) {
-          store.send(.updateRates)
-        }
-      }
-
-      ToolbarItem(placement: .primaryAction) {
+      ToolbarItemGroup(placement: .topBarTrailing) {
         Button {
           store.send(.addCurrencyButtonTapped)
         } label: {
           Image(systemName: "plus")
         }
+
+        Divider()
+          .frame(height: 20)
+
+        Button(Strings.save) {
+          store.send(.updateRates)
+        }
+        .fontWeight(.semibold)
       }
     }
   }
