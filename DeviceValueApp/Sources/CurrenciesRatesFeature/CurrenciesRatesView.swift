@@ -95,14 +95,19 @@ public struct CurrenciesRatesView: View {
     .navigationTitle(Strings.currencyRates)
     .navigationBarTitleDisplayMode(.inline)
     .toolbar {
-      ToolbarItem(placement: .topBarTrailing) {
+      ToolbarItem(placement: .primaryAction) {
         Button {
           store.send(.addCurrencyButtonTapped)
         } label: {
           Image(systemName: "plus")
         }
       }
-      ToolbarItem(placement: .topBarTrailing) {
+
+      if #available(iOS 26, *) {
+        ToolbarSpacer(.fixed, placement: .primaryAction)
+      }
+
+      ToolbarItem(placement: .primaryAction) {
         Button(Strings.save) {
           store.send(.updateRates)
         }
