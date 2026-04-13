@@ -51,7 +51,7 @@ public struct CurrencyRateView: View {
       } else {
         // Rate input
         VStack(alignment: .trailing, spacing: 2) {
-          Text("Rate")
+          Text(verbatim: "Rate")
             .font(.system(size: 10, weight: .semibold))
             .foregroundStyle(.secondary)
           TextField("0.00", text: $store.usdRate)
