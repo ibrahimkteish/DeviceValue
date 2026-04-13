@@ -95,7 +95,7 @@ public struct CurrenciesRatesView: View {
     .navigationTitle(Strings.currencyRates)
     .navigationBarTitleDisplayMode(.inline)
     .toolbar {
-      ToolbarItem(placement: .topBarLeading) {
+      ToolbarItem(placement: .topBarTrailing) {
         Button {
           store.send(.addCurrencyButtonTapped)
         } label: {
