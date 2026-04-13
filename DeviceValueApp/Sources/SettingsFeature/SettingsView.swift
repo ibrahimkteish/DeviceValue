@@ -66,6 +66,7 @@ public struct SettingsView: View {
                 }
               }
               .pickerStyle(.menu)
+              .fixedSize()
               .tint(.secondary)
 
               chevron
@@ -106,7 +107,7 @@ public struct SettingsView: View {
               icon: "globe",
               title: Strings.language
             ) {
-              Text(Strings.language)
+              Text(verbatim: "English")
                 .font(.system(size: 14))
                 .foregroundStyle(.secondary)
 
