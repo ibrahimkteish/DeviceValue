@@ -57,7 +57,7 @@ public struct CurrenciesRatesView: View {
                 .listRowInsets(EdgeInsets())
                 .listRowBackground(Color.clear)
             } header: {
-              Text("BASE REFERENCE")
+              Text(Strings.baseReference.uppercased())
                 .font(.system(size: 14, weight: .bold))
                 .tracking(1.4)
                 .foregroundStyle(.secondary)
@@ -70,7 +70,7 @@ public struct CurrenciesRatesView: View {
               .listRowInsets(EdgeInsets())
               .listRowSeparator(.hidden)
           } header: {
-            Text("LIVE RATES")
+            Text(Strings.liveRates.uppercased())
               .font(.system(size: 14, weight: .bold))
               .tracking(1.4)
               .foregroundStyle(.secondary)

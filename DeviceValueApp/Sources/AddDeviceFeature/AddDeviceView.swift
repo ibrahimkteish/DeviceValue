@@ -28,7 +28,7 @@ public struct AddDeviceView: View {
             .font(.system(size: 30, weight: .heavy))
             .tracking(-0.75)
             .foregroundStyle(.primary)
-          Text(DesignLabels.trackDepreciation)
+          Text(Strings.trackDepreciation)
             .font(.system(size: 16))
             .foregroundStyle(.secondary)
         }
@@ -248,12 +248,6 @@ public struct AddDeviceView: View {
   }
 }
 
-// Design label constants
-private enum DesignLabels {
-  static let trackDepreciation = "Track the depreciation of your hardware."
-  static let addDeviceButton = Strings.submit
-  static let editDeviceTitle = Strings.addNewDevice
-}
 
 #Preview {
   NavigationStack {

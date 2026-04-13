@@ -106,12 +106,12 @@ public struct DeviceCardView: View {
       }
       GridRow {
         metricCell(
-          label: "DAYS USED",
+          label: Strings.daysUsed.uppercased(),
           value: "\(data.device.elapsedDays) \(Strings.days)",
           valueColor: .primary
         )
         metricCell(
-          label: "REMAINING",
+          label: Strings.remaining.uppercased(),
           value: remainingCost.formatted(.currency(code: data.currency.code)),
           valueColor: .brandAmber
         )

@@ -22,8 +22,38 @@ public struct SettingsView: View {
   public var body: some View {
     ScrollView {
       VStack(alignment: .leading, spacing: 24) {
-        // PREFERENCE section
-        settingsSection(title: "PREFERENCE") {
+        preferenceSection
+        legalSection
+        aboutSection
+      }
+      .padding(.horizontal, 24)
+      .padding(.vertical, 32)
+    }
+    .background(backgroundColor)
+    .task {
+      await store.send(.onAppear).finish()
+    }
+    .navigationTitle(Strings.settings)
+    .sheet(isPresented: $store.isShowingCurrencyPicker) {
+      NavigationStack {
+        CurrencyPickerView(
+          currencies: store.availableCurrencies,
+          selectedCurrencyId: store.presentation.defaultCurrencyId,
+          onSelect: { currencyId in
+            store.send(.setDefaultCurrency(currencyId))
+          },
+          onCancel: {
+            store.send(.hideCurrencyPicker)
+          }
+        )
+      }
+    }
+  }
+
+  // MARK: - Sections
+
+  private var preferenceSection: some View {
+    settingsSection(title: Strings.preference.uppercased()) {
           VStack(spacing: 2) {
             // Appearance
             settingsRow(
@@ -76,7 +106,7 @@ public struct SettingsView: View {
               icon: "globe",
               title: Strings.language
             ) {
-              Text("English")
+              Text(Strings.language)
                 .font(.system(size: 14))
                 .foregroundStyle(.secondary)
 
@@ -101,97 +131,74 @@ public struct SettingsView: View {
           .clipShape(RoundedRectangle(cornerRadius: 12))
         }
 
-        // LEGAL & DOCUMENTATION section
-        settingsSection(title: "LEGAL & DOCUMENTATION") {
-          VStack(spacing: 2) {
-            // Acknowledgements
-            ForEach(self.store.acknowledgements) { acknowledgement in
-              Link(destination: acknowledgement.url) {
-                settingsRowContent(
-                  icon: "heart.text.square",
-                  title: acknowledgement.name
-                ) {
-                  chevron
-                }
-              }
-            }
+  }
 
-            // Legal
-            ForEach(["https://www.termsfeed.com/live/3d38411a-f533-4e2d-999d-e83d8eb2fe1b"], id: \.self) { url in
-              Link(destination: URL(string: url)!) {
-                settingsRowContent(
-                  icon: "doc.text",
-                  title: Strings.termsAndConditions
-                ) {
-                  chevron
-                }
-              }
+  private var legalSection: some View {
+    settingsSection(title: Strings.legalDocumentation.uppercased()) {
+      VStack(spacing: 2) {
+        ForEach(self.store.acknowledgements) { acknowledgement in
+          Link(destination: acknowledgement.url) {
+            settingsRowContent(
+              icon: "heart.text.square",
+              title: acknowledgement.name
+            ) {
+              chevron
             }
           }
-          .background(
-            RoundedRectangle(cornerRadius: 12)
-              .fill(Color(.secondarySystemGroupedBackground))
-              .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                  .stroke(Color.primary.opacity(0.08), lineWidth: 1)
-              )
-              .shadow(color: .black.opacity(0.06), radius: 6, x: 0, y: 2)
-          )
-          .clipShape(RoundedRectangle(cornerRadius: 12))
         }
-
-        // About section
-        VStack(spacing: 16) {
-          VStack(spacing: 4) {
-            Image(systemName: "info.circle")
-              .font(.system(size: 30))
-              .foregroundStyle(.secondary)
-
-            Text(Strings.about + " DeviceValue")
-              .font(.system(size: 16, weight: .bold))
-              .foregroundStyle(.primary)
-              .padding(.top, 4)
-
-            Text("\(Strings.version) \(store.appVersion) (Build \(store.buildNumber))")
-              .font(.system(size: 14))
-              .foregroundStyle(.secondary)
-              .padding(.bottom, 20)
-
-            Divider()
-              .opacity(0.1)
+        ForEach(["https://www.termsfeed.com/live/3d38411a-f533-4e2d-999d-e83d8eb2fe1b"], id: \.self) { url in
+          Link(destination: URL(string: url)!) {
+            settingsRowContent(
+              icon: "doc.text",
+              title: Strings.termsAndConditions
+            ) {
+              chevron
+            }
           }
-          .frame(maxWidth: .infinity)
-          .padding(24)
-          .background(
-            RoundedRectangle(cornerRadius: 12)
-              .fill(Color(.systemGray5))
-          )
         }
-        .padding(.top, 16)
-        .padding(.horizontal, 8)
       }
-      .padding(.horizontal, 24)
-      .padding(.vertical, 32)
+      .background(
+        RoundedRectangle(cornerRadius: 12)
+          .fill(Color(.secondarySystemGroupedBackground))
+          .overlay(
+            RoundedRectangle(cornerRadius: 12)
+              .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+          )
+          .shadow(color: .black.opacity(0.06), radius: 6, x: 0, y: 2)
+      )
+      .clipShape(RoundedRectangle(cornerRadius: 12))
     }
-    .background(backgroundColor)
-    .task {
-      await store.send(.onAppear).finish()
-    }
-    .navigationTitle(Strings.settings)
-    .sheet(isPresented: $store.isShowingCurrencyPicker) {
-      NavigationStack {
-        CurrencyPickerView(
-          currencies: store.availableCurrencies,
-          selectedCurrencyId: store.presentation.defaultCurrencyId,
-          onSelect: { currencyId in
-            store.send(.setDefaultCurrency(currencyId))
-          },
-          onCancel: {
-            store.send(.hideCurrencyPicker)
-          }
-        )
+  }
+
+  private var aboutSection: some View {
+    VStack(spacing: 16) {
+      VStack(spacing: 4) {
+        Image(systemName: "info.circle")
+          .font(.system(size: 30))
+          .foregroundStyle(.secondary)
+
+        Text(Strings.about + " DeviceValue")
+          .font(.system(size: 16, weight: .bold))
+          .foregroundStyle(.primary)
+          .padding(.top, 4)
+
+        Text("\(Strings.version) \(store.appVersion) (Build \(store.buildNumber))")
+          .font(.system(size: 14))
+          .foregroundStyle(.secondary)
+          .padding(.bottom, 20)
+
+        Divider()
+          .opacity(0.1)
       }
+      .frame(maxWidth: .infinity)
+      .padding(24)
+      .background(
+        RoundedRectangle(cornerRadius: 12)
+          .fill(Color(.systemGray5))
+      )
     }
+    .padding(.top, 16)
+    .padding(.horizontal, 8)
   }
 
   // MARK: - Components

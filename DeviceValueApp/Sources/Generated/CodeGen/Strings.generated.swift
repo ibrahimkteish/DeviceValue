@@ -28,6 +28,8 @@ public enum Strings {
   public static let base = Strings.tr("Localizable", "Base", fallback: "Base")
   /// Base Currency
   public static let baseCurrency = Strings.tr("Localizable", "BaseCurrency", fallback: "Base Currency")
+  /// Base Reference
+  public static let baseReference = Strings.tr("Localizable", "BaseReference", fallback: "Base Reference")
   /// Cancel
   public static let cancel = Strings.tr("Localizable", "Cancel", fallback: "Cancel")
   /// Cannot delete the default currency. Change the default currency in Settings first.
@@ -50,6 +52,8 @@ public enum Strings {
   public static let currencyRates = Strings.tr("Localizable", "CurrencyRates", fallback: "Currency Rates")
   /// Symbol (e.g. £)
   public static let currencySymbol = Strings.tr("Localizable", "CurrencySymbol", fallback: "Symbol (e.g. £)")
+  /// Current Burn
+  public static let currentBurn = Strings.tr("Localizable", "CurrentBurn", fallback: "Current Burn")
   /// Daily Rate: %@
   public static func dailyRate(_ p1: Any) -> String {
     return Strings.tr("Localizable", "DailyRate", String(describing: p1), fallback: "Daily Rate: %@")
@@ -64,6 +68,8 @@ public enum Strings {
   public static func daysLeft(_ p1: Int) -> String {
     return Strings.tr("Localizable", "DaysLeft", p1, fallback: "Days Left: %lld")
   }
+  /// Days Used
+  public static let daysUsed = Strings.tr("Localizable", "DaysUsed", fallback: "Days Used")
   /// Default Currency
   public static let defaultCurrency = Strings.tr("Localizable", "DefaultCurrency", fallback: "Default Currency")
   /// Delete
@@ -84,12 +90,18 @@ public enum Strings {
   public static func errorDeletingCurrency(_ p1: Any) -> String {
     return Strings.tr("Localizable", "ErrorDeletingCurrency", String(describing: p1), fallback: "Error deleting currency: %@")
   }
+  /// Est. Days Left
+  public static let estDaysLeft = Strings.tr("Localizable", "EstDaysLeft", fallback: "Est. Days Left")
   /// Exchange Rate to USD
   public static let exchangeRateToUSD = Strings.tr("Localizable", "ExchangeRateToUSD", fallback: "Exchange Rate to USD")
   /// Expected: %lld%%
   public static func expected(_ p1: Int) -> String {
     return Strings.tr("Localizable", "Expected", p1, fallback: "Expected: %lld%%")
   }
+  /// Filter
+  public static let filter = Strings.tr("Localizable", "Filter", fallback: "Filter")
+  /// Global Assets
+  public static let globalAssets = Strings.tr("Localizable", "GlobalAssets", fallback: "Global Assets")
   /// Items %@
   public static func itemsWithCost(_ p1: Any) -> String {
     return Strings.tr("Localizable", "ItemsWithCost", String(describing: p1), fallback: "Items %@")
@@ -102,6 +114,12 @@ public enum Strings {
   public static let languageRegion = Strings.tr("Localizable", "LanguageRegion", fallback: "Language & Region")
   /// Legal
   public static let legal = Strings.tr("Localizable", "Legal", fallback: "Legal")
+  /// Legal & Documentation
+  public static let legalDocumentation = Strings.tr("Localizable", "LegalDocumentation", fallback: "Legal & Documentation")
+  /// Lifecycle Total
+  public static let lifecycleTotal = Strings.tr("Localizable", "LifecycleTotal", fallback: "Lifecycle Total")
+  /// Live Rates
+  public static let liveRates = Strings.tr("Localizable", "LiveRates", fallback: "Live Rates")
   /// Loading currencies...
   public static let loadingCurrencies = Strings.tr("Localizable", "LoadingCurrencies", fallback: "Loading currencies...")
   /// month
@@ -130,6 +148,8 @@ public enum Strings {
   public static func perPeriod(_ p1: Any) -> String {
     return Strings.tr("Localizable", "PerPeriod", String(describing: p1), fallback: "Per %@")
   }
+  /// Preference
+  public static let preference = Strings.tr("Localizable", "Preference", fallback: "Preference")
   /// Purchase Date
   public static let purchaseDate = Strings.tr("Localizable", "PurchaseDate", fallback: "Purchase Date")
   /// Purchased for %@
@@ -142,6 +162,8 @@ public enum Strings {
   public static func rate(_ p1: Any, _ p2: Any) -> String {
     return Strings.tr("Localizable", "Rate", String(describing: p1), String(describing: p2), fallback: "Rate: %@/%@")
   }
+  /// Remaining
+  public static let remaining = Strings.tr("Localizable", "Remaining", fallback: "Remaining")
   /// Remaining Cost: %@
   public static func remainingCost(_ p1: Any) -> String {
     return Strings.tr("Localizable", "RemainingCost", String(describing: p1), fallback: "Remaining Cost: %@")
@@ -168,8 +190,12 @@ public enum Strings {
   public static let termsAndConditions = Strings.tr("Localizable", "TermsAndConditions", fallback: "Terms and Conditions")
   /// Theme changes will affect the app's appearance.
   public static let themeFooter = Strings.tr("Localizable", "ThemeFooter", fallback: "Theme changes will affect the app's appearance.")
+  /// Total Daily Cost
+  public static let totalDailyCost = Strings.tr("Localizable", "TotalDailyCost", fallback: "Total Daily Cost")
   /// Total Purchase Value
   public static let totalPurchaseValue = Strings.tr("Localizable", "TotalPurchaseValue", fallback: "Total Purchase Value")
+  /// Track the depreciation of your hardware.
+  public static let trackDepreciation = Strings.tr("Localizable", "TrackDepreciation", fallback: "Track the depreciation of your hardware.")
   /// Update
   public static let update = Strings.tr("Localizable", "Update", fallback: "Update")
   /// Updated At
@@ -188,6 +214,8 @@ public enum Strings {
   public static func valueLeft(_ p1: Any) -> String {
     return Strings.tr("Localizable", "ValueLeft", String(describing: p1), fallback: "Value Left: %@")
   }
+  /// Value Remaining
+  public static let valueRemaining = Strings.tr("Localizable", "ValueRemaining", fallback: "Value Remaining")
   /// Version
   public static let version = Strings.tr("Localizable", "Version", fallback: "Version")
   /// View Currency Rates

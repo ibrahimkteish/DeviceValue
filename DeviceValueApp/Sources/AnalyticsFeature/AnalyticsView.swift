@@ -36,7 +36,7 @@ public struct AnalyticsView: View {
         title: Strings.totalPurchaseValue,
         value: store.formattedTotalPurchaseValue,
         valueColor: .brandBlue,
-        subtitle: "Global Assets",
+        subtitle: Strings.globalAssets,
         subtitleColor: .brandGreen
       )
 
@@ -51,14 +51,14 @@ public struct AnalyticsView: View {
         title: Strings.consumedValue,
         value: store.formattedConsumedValue,
         valueColor: .brandAmber,
-        subtitle: "Lifecycle Total",
+        subtitle: Strings.lifecycleTotal,
         subtitleColor: .secondary
       )
 
       AnalyticsCard(
         title: Strings.dailyUsage,
         value: store.formattedDailyUsage,
-        subtitle: "Current Burn",
+        subtitle: Strings.currentBurn,
         subtitleColor: .brandRed
       )
     }
@@ -139,7 +139,7 @@ public struct AnalyticsView: View {
       // Stats row
       HStack(spacing: 16) {
         VStack(alignment: .leading, spacing: 3.5) {
-          Text("VALUE REMAINING")
+          Text(Strings.valueRemaining.uppercased())
             .font(.system(size: 10, weight: .semibold))
             .foregroundStyle(.secondary)
           Text(metric.remainingValue.formatted(.currency(code: metric.currencyCode)))
@@ -154,10 +154,10 @@ public struct AnalyticsView: View {
         )
 
         VStack(alignment: .trailing, spacing: 3.5) {
-          Text("EST. DAYS LEFT")
+          Text(Strings.estDaysLeft.uppercased())
             .font(.system(size: 10, weight: .semibold))
             .foregroundStyle(.secondary)
-          Text("\(Int(metric.daysRemaining)) Days")
+          Text("\(Int(metric.daysRemaining)) \(Strings.days.capitalized)")
             .font(.system(size: 14, weight: .semibold))
             .foregroundStyle(.primary)
         }

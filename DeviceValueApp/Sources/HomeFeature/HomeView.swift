@@ -30,7 +30,7 @@ public struct HomeView: View {
       HStack(spacing: 8) {
         Image(systemName: "line.3.horizontal.decrease")
           .font(.system(size: 10, weight: .semibold))
-        Text("Filter")
+        Text(Strings.filter)
           .font(.system(size: 14, weight: .medium))
       }
       .foregroundStyle(.secondary)
@@ -57,7 +57,7 @@ public struct HomeView: View {
       Spacer()
 
       VStack(spacing: 0) {
-        Text("Total Daily Cost")
+        Text(Strings.totalDailyCost)
           .font(.system(size: 24, weight: .bold))
           .tracking(-0.6)
           .foregroundStyle(Color.brandBlue)

@@ -139,6 +139,29 @@
         }
       }
     },
+    "BaseReference" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base Reference"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referencia base"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Référence de base"
+          }
+        }
+      }
+    },
     "BaseCurrency" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -369,6 +392,22 @@
         }
       }
     },
+    "CurrentBurn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Current Burn" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Gasto actual" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Consommation actuelle" } }
+      }
+    },
+    "DaysUsed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Days Used" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Días usados" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Jours utilisés" } }
+      }
+    },
     "DaysLeft" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -507,6 +546,14 @@
         }
       }
     },
+    "EstDaysLeft" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Est. Days Left" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Días restantes est." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Jours restants est." } }
+      }
+    },
     "Expected" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -528,6 +575,22 @@
             "value" : "Prévu: %lld%%"
           }
         }
+      }
+    },
+    "Filter" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Filter" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Filtrar" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Filtrer" } }
+      }
+    },
+    "GlobalAssets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Global Assets" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Activos globales" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Actifs globaux" } }
       }
     },
     "ItemsWithCost" : {
@@ -622,6 +685,14 @@
         }
       }
     },
+    "LegalDocumentation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Legal & Documentation" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Legal y documentación" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Juridique et documentation" } }
+      }
+    },
     "Legal" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -643,6 +714,22 @@
             "value" : "Mentions légales"
           }
         }
+      }
+    },
+    "LifecycleTotal" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Lifecycle Total" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Total del ciclo de vida" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Total du cycle de vie" } }
+      }
+    },
+    "LiveRates" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Live Rates" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tasas en vivo" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Taux en direct" } }
       }
     },
     "LoadingCurrencies" : {
@@ -806,6 +893,14 @@
         }
       }
     },
+    "Preference" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Preference" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Preferencias" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Préférences" } }
+      }
+    },
     "PercentUsed" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -965,6 +1060,14 @@
             "value" : "Taux: %@/%@"
           }
         }
+      }
+    },
+    "Remaining" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Remaining" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Restante" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Restant" } }
       }
     },
     "RemainingCost" : {
@@ -1151,6 +1254,14 @@
         }
       }
     },
+    "TotalDailyCost" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Total Daily Cost" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Coste diario total" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Coût journalier total" } }
+      }
+    },
     "TotalPurchaseValue" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1195,6 +1306,14 @@
             "value" : "Mis à jour le"
           }
         }
+      }
+    },
+    "TrackDepreciation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Track the depreciation of your hardware." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Rastrea la depreciación de tu hardware." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Suivez la dépréciation de votre matériel." } }
       }
     },
     "UsageAnalytics" : {
@@ -1494,6 +1613,14 @@
             "value" : "Entrez le taux de change direct : combien d'unités de cette devise équivalent exactement à 1 USD. Les taux de change varient au fil du temps, alors entrez la valeur actuelle du marché."
           }
         }
+      }
+    },
+    "ValueRemaining" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Value Remaining" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Valor restante" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Valeur restante" } }
       }
     },
     "ExchangeRateToUSD" : {
