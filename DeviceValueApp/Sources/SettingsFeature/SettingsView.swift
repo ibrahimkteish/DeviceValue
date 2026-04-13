@@ -33,6 +33,7 @@ public struct SettingsView: View {
     .task {
       await store.send(.onAppear).finish()
     }
+    .tint(Color.brandBlue)
     .navigationTitle(Strings.settings)
     .sheet(isPresented: $store.isShowingCurrencyPicker) {
       NavigationStack {
@@ -72,32 +73,30 @@ public struct SettingsView: View {
               chevron
             }
 
-            // Currency
-            settingsRow(
-              icon: "dollarsign.square",
-              title: Strings.currency
-            ) {
-              Button(Strings.viewCurrencyRates) {
-                store.send(.openCurrencyRates)
+            // Currency - tap row to change, tap "Rates" to manage
+            Button {
+              store.send(.showCurrencyPicker)
+            } label: {
+              settingsRowContent(
+                icon: "dollarsign.square",
+                title: Strings.currency
+              ) {
+                if let currency = store.presentation.defaultCurrency {
+                  Text(currency.code)
+                    .font(.system(size: 14))
+                    .foregroundStyle(.secondary)
+                }
+                chevron
               }
-              .font(.system(size: 12, weight: .semibold))
-              .foregroundStyle(Color.brandBlue)
-              .padding(.horizontal, 12)
-              .padding(.vertical, 4)
-              .background(
-                Capsule()
-                  .fill(Color.brandBlueLight.opacity(0.1))
-              )
+            }
 
-              if let currency = store.presentation.defaultCurrency {
-                Text(currency.code)
-                  .font(.system(size: 14))
-                  .foregroundStyle(.secondary)
-              }
-
-              Button {
-                store.send(.showCurrencyPicker)
-              } label: {
+            Button {
+              store.send(.openCurrencyRates)
+            } label: {
+              settingsRowContent(
+                icon: "chart.line.uptrend.xyaxis",
+                title: Strings.viewCurrencyRates
+              ) {
                 chevron
               }
             }
