@@ -5,18 +5,17 @@ import SwiftUI
 
 public struct AddDeviceView: View {
   @Bindable var store: StoreOf<AddDeviceFeature>
-  @Environment(\.colorScheme) private var colorScheme
 
   public init(store: StoreOf<AddDeviceFeature>) {
     self.store = store
   }
 
   private var backgroundColor: Color {
-    colorScheme == .dark ? Color(.systemBackground) : Color(hex: 0xFAF9FE)
+    Color(.systemBackground)
   }
 
   private var inputBackgroundColor: Color {
-    Color(hex: 0xE3E2E7).opacity(0.5)
+    Color(.secondarySystemBackground)
   }
 
   public var body: some View {
@@ -27,10 +26,10 @@ public struct AddDeviceView: View {
           Text(Strings.addNewDevice)
             .font(.system(size: 30, weight: .heavy))
             .tracking(-0.75)
-            .foregroundStyle(Color(hex: 0x1A1B1F))
+            .foregroundStyle(.primary)
           Text(DesignLabels.trackDepreciation)
             .font(.system(size: 16))
-            .foregroundStyle(Color(hex: 0x414755))
+            .foregroundStyle(.secondary)
         }
 
         // Form fields
@@ -41,7 +40,7 @@ public struct AddDeviceView: View {
               if store.currencies.isEmpty {
                 HStack {
                   Text(Strings.loadingCurrencies)
-                    .foregroundStyle(Color(hex: 0x414755))
+                    .foregroundStyle(.secondary)
                   Spacer()
                   Button {
                     store.send(.addCurrencyTapped)
@@ -108,7 +107,7 @@ public struct AddDeviceView: View {
               HStack(spacing: 0) {
                 Text(store.currencies.first(where: { $0.id == store.selectedCurrencyId })?.symbol ?? "$")
                   .font(.system(size: 16, weight: .semibold))
-                  .foregroundStyle(Color(hex: 0x414755))
+                  .foregroundStyle(.secondary)
                   .padding(.leading, 16)
                 TextField("0.00", text: $store.purchasePrice)
                   .keyboardType(.decimalPad)
@@ -161,7 +160,7 @@ public struct AddDeviceView: View {
                     Text(period.localizedName.capitalized)
                       .font(.system(size: 13, weight: .semibold))
                       .foregroundStyle(
-                        isSelected ? Color(hex: 0x0058BC) : Color(hex: 0x414755).opacity(0.6)
+                        isSelected ? Color(hex: 0x0058BC) : Color.secondary.opacity(0.6)
                       )
                       .frame(maxWidth: .infinity)
                       .padding(.vertical, 10)
@@ -169,7 +168,7 @@ public struct AddDeviceView: View {
                         Group {
                           if isSelected {
                             RoundedRectangle(cornerRadius: 12)
-                              .fill(colorScheme == .dark ? Color(white: 0.25) : .white)
+                              .fill(Color(.systemBackground))
                               .shadow(color: .black.opacity(0.05), radius: 1, x: 0, y: 1)
                           }
                         }
@@ -231,7 +230,7 @@ public struct AddDeviceView: View {
       .padding(.top, 8)
       .padding(.bottom, 56)
     }
-    .background(backgroundColor.opacity(0.85))
+    .background(backgroundColor)
     .navigationBarHidden(true)
   }
 
@@ -241,7 +240,7 @@ public struct AddDeviceView: View {
       Text(label)
         .font(.system(size: 12, weight: .semibold))
         .tracking(1.2)
-        .foregroundStyle(Color(hex: 0x414755))
+        .foregroundStyle(.secondary)
         .padding(.leading, 4)
       content()
     }

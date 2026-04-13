@@ -6,14 +6,13 @@ import Utils
 
 public struct AnalyticsView: View {
   @Bindable var store: StoreOf<Analytics>
-  @Environment(\.colorScheme) private var colorScheme
 
   public init(store: StoreOf<Analytics>) {
     self.store = store
   }
 
   private var backgroundColor: Color {
-    colorScheme == .dark ? Color(.systemBackground) : Color(hex: 0xFAF9FE)
+    Color(.systemBackground)
   }
 
   public var body: some View {
@@ -53,7 +52,7 @@ public struct AnalyticsView: View {
         value: store.formattedConsumedValue,
         valueColor: Color(hex: 0x894D00),
         subtitle: "Lifecycle Total",
-        subtitleColor: Color(hex: 0x414755)
+        subtitleColor: .secondary
       )
 
       AnalyticsCard(
@@ -71,7 +70,7 @@ public struct AnalyticsView: View {
       HStack {
         Text(Strings.deviceUsage)
           .font(.system(size: 20, weight: .bold))
-          .foregroundStyle(Color(hex: 0x1A1B1F))
+          .foregroundStyle(.primary)
         Spacer()
       }
       .padding(.horizontal, 24)
@@ -103,21 +102,21 @@ public struct AnalyticsView: View {
         HStack(spacing: 16) {
           // Device icon
           RoundedRectangle(cornerRadius: 16)
-            .fill(colorScheme == .dark ? Color(white: 0.2) : Color(hex: 0xEEEDF3))
+            .fill(Color(.systemGray5))
             .frame(width: 48, height: 48)
             .overlay(
               Image(systemName: deviceIcon(for: metric.deviceName))
                 .font(.system(size: 18))
-                .foregroundStyle(Color(hex: 0x414755))
+                .foregroundStyle(.secondary)
             )
 
           VStack(alignment: .leading, spacing: 0) {
             Text(metric.deviceName)
               .font(.system(size: 16, weight: .bold))
-              .foregroundStyle(Color(hex: 0x1A1B1F))
+              .foregroundStyle(.primary)
             Text("Asset #DV-\(metric.id)")
               .font(.system(size: 12))
-              .foregroundStyle(Color(hex: 0x414755))
+              .foregroundStyle(.secondary)
           }
         }
 
@@ -133,7 +132,7 @@ public struct AnalyticsView: View {
 
           Text(metric.dailyUsageRate.formatted(.currency(code: metric.currencyCode)) + "/\(Strings.day)")
             .font(.system(size: 14, weight: .semibold))
-            .foregroundStyle(Color(hex: 0x1A1B1F))
+            .foregroundStyle(.primary)
         }
       }
 
@@ -142,31 +141,31 @@ public struct AnalyticsView: View {
         VStack(alignment: .leading, spacing: 3.5) {
           Text("VALUE REMAINING")
             .font(.system(size: 10, weight: .semibold))
-            .foregroundStyle(Color(hex: 0x414755))
+            .foregroundStyle(.secondary)
           Text(metric.remainingValue.formatted(.currency(code: metric.currencyCode)))
             .font(.system(size: 14, weight: .semibold))
-            .foregroundStyle(Color(hex: 0x1A1B1F))
+            .foregroundStyle(.primary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
         .background(
           RoundedRectangle(cornerRadius: 16)
-            .fill(colorScheme == .dark ? Color(white: 0.15) : Color(hex: 0xF4F3F8))
+            .fill(Color(.secondarySystemBackground))
         )
 
         VStack(alignment: .trailing, spacing: 3.5) {
           Text("EST. DAYS LEFT")
             .font(.system(size: 10, weight: .semibold))
-            .foregroundStyle(Color(hex: 0x414755))
+            .foregroundStyle(.secondary)
           Text("\(Int(metric.daysRemaining)) Days")
             .font(.system(size: 14, weight: .semibold))
-            .foregroundStyle(Color(hex: 0x1A1B1F))
+            .foregroundStyle(.primary)
         }
         .frame(maxWidth: .infinity, alignment: .trailing)
         .padding(12)
         .background(
           RoundedRectangle(cornerRadius: 16)
-            .fill(colorScheme == .dark ? Color(white: 0.15) : Color(hex: 0xF4F3F8))
+            .fill(Color(.secondarySystemBackground))
         )
       }
 
@@ -174,7 +173,7 @@ public struct AnalyticsView: View {
       GeometryReader { geometry in
         ZStack(alignment: .leading) {
           RoundedRectangle(cornerRadius: .infinity)
-            .fill(Color(hex: 0xE3E2E7).opacity(0.4))
+            .fill(Color(.secondarySystemBackground))
             .frame(height: 8)
           RoundedRectangle(cornerRadius: .infinity)
             .fill(progressColor)
@@ -186,7 +185,7 @@ public struct AnalyticsView: View {
     .padding(20)
     .background(
       RoundedRectangle(cornerRadius: 24)
-        .fill(colorScheme == .dark ? Color(white: 0.12) : .white)
+        .fill(Color(.secondarySystemGroupedBackground))
         .shadow(color: .black.opacity(0.05), radius: 1, x: 0, y: 1)
     )
   }

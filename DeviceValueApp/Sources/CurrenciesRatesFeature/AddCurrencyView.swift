@@ -7,7 +7,6 @@ import Utils
 public struct AddCurrencyView: View {
   let store: StoreOf<CurrenciesRatesFeature>
   @Environment(\.dismiss) private var dismiss
-  @Environment(\.colorScheme) private var colorScheme
 
   @State private var code = ""
   @State private var symbol = ""
@@ -19,7 +18,7 @@ public struct AddCurrencyView: View {
   }
 
   private var inputBackgroundColor: Color {
-    Color(hex: 0xE3E2E7).opacity(0.4)
+    Color(.secondarySystemBackground)
   }
 
   public var body: some View {
@@ -29,7 +28,7 @@ public struct AddCurrencyView: View {
         Text(Strings.addCurrency)
           .font(.system(size: 24, weight: .heavy))
           .tracking(-0.6)
-          .foregroundStyle(Color(hex: 0x1A1B1F))
+          .foregroundStyle(.primary)
 
         Spacer()
 
@@ -38,12 +37,12 @@ public struct AddCurrencyView: View {
           dismiss()
         } label: {
           Circle()
-            .fill(Color(hex: 0xE3E2E7).opacity(0.5))
+            .fill(Color(.secondarySystemBackground))
             .frame(width: 40, height: 40)
             .overlay(
               Image(systemName: "xmark")
                 .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(Color(hex: 0x414755))
+                .foregroundStyle(.secondary)
             )
         }
       }
@@ -102,7 +101,7 @@ public struct AddCurrencyView: View {
               .padding(16)
               .background(
                 RoundedRectangle(cornerRadius: 12)
-                  .fill(Color(hex: 0xE3E2E7).opacity(0.6))
+                  .fill(Color(.secondarySystemBackground))
                   .shadow(color: Color(hex: 0x0058BC).opacity(0.05), radius: 4, x: 0, y: 2)
               )
 
@@ -154,7 +153,7 @@ public struct AddCurrencyView: View {
         } label: {
           Text(Strings.cancel)
             .font(.system(size: 14, weight: .medium))
-            .foregroundStyle(Color(hex: 0x414755))
+            .foregroundStyle(.secondary)
             .padding(.vertical, 8)
         }
       }
@@ -163,10 +162,7 @@ public struct AddCurrencyView: View {
     .padding(.horizontal, 32)
     .padding(.top, 24)
     .padding(.bottom, 40)
-    .background(
-      (colorScheme == .dark ? Color(.systemBackground) : Color(hex: 0xFAF9FE))
-        .opacity(0.85)
-    )
+    .background(Color(.systemBackground))
   }
 
   @ViewBuilder
@@ -175,7 +171,7 @@ public struct AddCurrencyView: View {
       Text(label)
         .font(.system(size: 11, weight: .semibold))
         .tracking(0.55)
-        .foregroundStyle(Color(hex: 0x414755))
+        .foregroundStyle(.secondary)
       content()
     }
   }

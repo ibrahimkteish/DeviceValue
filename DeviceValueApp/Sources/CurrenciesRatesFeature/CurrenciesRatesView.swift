@@ -8,14 +8,13 @@ import Utils
 public struct CurrenciesRatesView: View {
   @Bindable var store: StoreOf<CurrenciesRatesFeature>
   @Environment(\.dismiss) private var dismiss
-  @Environment(\.colorScheme) private var colorScheme
 
   public init(store: StoreOf<CurrenciesRatesFeature>) {
     self.store = store
   }
 
   private var backgroundColor: Color {
-    colorScheme == .dark ? Color(.systemBackground) : Color(hex: 0xFAF9FE)
+    Color(.systemBackground)
   }
 
   @ViewBuilder
@@ -61,7 +60,7 @@ public struct CurrenciesRatesView: View {
               Text("BASE REFERENCE")
                 .font(.system(size: 14, weight: .bold))
                 .tracking(1.4)
-                .foregroundStyle(Color(hex: 0x414755))
+                .foregroundStyle(.secondary)
             }
           }
 
@@ -74,7 +73,7 @@ public struct CurrenciesRatesView: View {
             Text("LIVE RATES")
               .font(.system(size: 14, weight: .bold))
               .tracking(1.4)
-              .foregroundStyle(Color(hex: 0x414755))
+              .foregroundStyle(.secondary)
           }
         }
       }
@@ -141,11 +140,11 @@ public struct CurrenciesRatesView: View {
         Text(currency.code)
           .font(.system(size: 12, weight: .semibold))
           .tracking(0.6)
-          .foregroundStyle(Color(hex: 0x414755))
+          .foregroundStyle(.secondary)
           .textCase(.uppercase)
         Text(currency.name)
           .font(.system(size: 24, weight: .heavy))
-          .foregroundStyle(Color(hex: 0x1A1B1F))
+          .foregroundStyle(.primary)
       }
 
       Spacer()
@@ -153,7 +152,7 @@ public struct CurrenciesRatesView: View {
     .padding(24)
     .background(
       RoundedRectangle(cornerRadius: 24)
-        .fill(colorScheme == .dark ? Color(white: 0.12) : .white)
+        .fill(Color(.secondarySystemGroupedBackground))
         .shadow(color: .black.opacity(0.04), radius: 15, x: 0, y: 8)
     )
   }

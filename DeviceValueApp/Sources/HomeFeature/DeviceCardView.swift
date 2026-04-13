@@ -15,7 +15,6 @@ public struct DeviceCardView: View {
 
   public let data: HomeFeature.Items.State
   @State private var isPressed: Bool = false
-  @Environment(\.colorScheme) private var colorScheme
 
   init(data: HomeFeature.Items.State) {
     self.data = data
@@ -69,7 +68,7 @@ public struct DeviceCardView: View {
         .foregroundStyle(Color(hex: 0x0058BC))
       Text(data.device.name)
         .font(.system(size: 18, weight: .heavy))
-        .foregroundStyle(Color(hex: 0x1A1B1F))
+        .foregroundStyle(.primary)
     }
   }
 
@@ -97,7 +96,7 @@ public struct DeviceCardView: View {
         metricCell(
           label: Strings.purchasePrice.uppercased(),
           value: data.device.purchasePrice.formatted(.currency(code: data.currency.code)),
-          valueColor: Color(hex: 0x1A1B1F)
+          valueColor: .primary
         )
         metricCell(
           label: Strings.usageRate.uppercased(),
@@ -109,7 +108,7 @@ public struct DeviceCardView: View {
         metricCell(
           label: "DAYS USED",
           value: "\(data.device.elapsedDays) \(Strings.days)",
-          valueColor: Color(hex: 0x1A1B1F)
+          valueColor: .primary
         )
         metricCell(
           label: "REMAINING",
@@ -126,7 +125,7 @@ public struct DeviceCardView: View {
       Text(label)
         .font(.system(size: 10, weight: .semibold))
         .tracking(0.5)
-        .foregroundStyle(Color(hex: 0x414755))
+        .foregroundStyle(.secondary)
       Text(value)
         .font(.system(size: 16, weight: .bold, design: .default))
         .foregroundStyle(valueColor)
@@ -147,7 +146,7 @@ public struct DeviceCardView: View {
 
       Text("\(Int(progress * 100))%")
         .font(.system(size: 12, weight: .bold, design: .rounded))
-        .foregroundStyle(Color(hex: 0x1A1B1F))
+        .foregroundStyle(.primary)
     }
     .frame(width: 70, height: 70)
   }
@@ -167,7 +166,7 @@ public struct DeviceCardView: View {
     .padding(24)
     .background(
       RoundedRectangle(cornerRadius: 24)
-        .fill(colorScheme == .dark ? Color(white: 0.15) : .white)
+        .fill(Color(.secondarySystemGroupedBackground))
         .shadow(color: .black.opacity(0.04), radius: 15, x: 0, y: 8)
     )
     .scaleEffect(isPressed ? 0.98 : 1.0)
@@ -219,7 +218,7 @@ public struct DeviceCardView: View {
     )
   }
   .padding(24)
-  .background(Color(hex: 0xFAF9FE))
+  .background(Color(.systemBackground))
 }
 #endif
 

@@ -11,7 +11,6 @@ import SwiftUI
 
 public struct HomeView: View {
   @Bindable var store: StoreOf<HomeFeature>
-  @Environment(\.colorScheme) private var colorScheme
 
   public init(store: StoreOf<HomeFeature>) {
     self.store = store
@@ -34,12 +33,12 @@ public struct HomeView: View {
         Text("Filter")
           .font(.system(size: 14, weight: .medium))
       }
-      .foregroundStyle(Color(hex: 0x414755))
+      .foregroundStyle(.secondary)
       .padding(.horizontal, 16)
       .padding(.vertical, 8)
       .background(
         Capsule()
-          .fill(colorScheme == .dark ? Color(white: 0.2) : Color(hex: 0xF4F3F8))
+          .fill(Color(.secondarySystemBackground))
       )
     }
   }
@@ -176,7 +175,7 @@ public struct HomeView: View {
           .padding(.horizontal, 24)
           devices
         }
-        .background(colorScheme == .dark ? Color(.systemBackground) : Color(hex: 0xFAF9FE))
+        .background(Color(.systemBackground))
 
         floatingAddButton
       }

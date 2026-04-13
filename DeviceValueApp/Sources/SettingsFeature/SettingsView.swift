@@ -6,22 +6,21 @@ import Utils
 
 public struct SettingsView: View {
   @Bindable var store: StoreOf<SettingsFeature>
-  @Environment(\.colorScheme) private var colorScheme
 
   public init(store: StoreOf<SettingsFeature>) {
     self.store = store
   }
 
   private var backgroundColor: Color {
-    colorScheme == .dark ? Color(.systemBackground) : Color(hex: 0xFAF9FE)
+    Color(.systemBackground)
   }
 
   private var cardBackground: Color {
-    colorScheme == .dark ? Color(white: 0.12) : .white
+    Color(.secondarySystemGroupedBackground)
   }
 
   private var separatorColor: Color {
-    colorScheme == .dark ? Color(white: 0.2) : Color(hex: 0xF4F3F8)
+    Color(.secondarySystemBackground)
   }
 
   public var body: some View {
@@ -41,7 +40,7 @@ public struct SettingsView: View {
                 }
               }
               .pickerStyle(.menu)
-              .tint(Color(hex: 0x414755))
+              .tint(.secondary)
 
               chevron
             }
@@ -66,7 +65,7 @@ public struct SettingsView: View {
               if let currency = store.presentation.defaultCurrency {
                 Text(currency.code)
                   .font(.system(size: 14))
-                  .foregroundStyle(Color(hex: 0x414755))
+                  .foregroundStyle(.secondary)
               }
 
               Button {
@@ -83,14 +82,14 @@ public struct SettingsView: View {
             ) {
               Text("English")
                 .font(.system(size: 14))
-                .foregroundStyle(Color(hex: 0x414755))
+                .foregroundStyle(.secondary)
 
               Button {
                 store.send(.openLanguageSettings)
               } label: {
                 Image(systemName: "arrow.up.right")
                   .font(.system(size: 12))
-                  .foregroundStyle(Color(hex: 0x414755))
+                  .foregroundStyle(.secondary)
               }
             }
           }
@@ -140,16 +139,16 @@ public struct SettingsView: View {
           VStack(spacing: 4) {
             Image(systemName: "info.circle")
               .font(.system(size: 30))
-              .foregroundStyle(Color(hex: 0x414755))
+              .foregroundStyle(.secondary)
 
             Text(Strings.about + " DeviceValue")
               .font(.system(size: 16, weight: .bold))
-              .foregroundStyle(Color(hex: 0x1A1B1F))
+              .foregroundStyle(.primary)
               .padding(.top, 4)
 
             Text("\(Strings.version) \(store.appVersion) (Build \(store.buildNumber))")
               .font(.system(size: 14))
-              .foregroundStyle(Color(hex: 0x414755))
+              .foregroundStyle(.secondary)
               .padding(.bottom, 20)
 
             Divider()
@@ -159,7 +158,7 @@ public struct SettingsView: View {
           .padding(24)
           .background(
             RoundedRectangle(cornerRadius: 12)
-              .fill(colorScheme == .dark ? Color(white: 0.15) : Color(hex: 0xEEEDF3))
+              .fill(Color(.systemGray5))
           )
         }
         .padding(.top, 16)
@@ -194,7 +193,7 @@ public struct SettingsView: View {
   private var chevron: some View {
     Image(systemName: "chevron.right")
       .font(.system(size: 12, weight: .semibold))
-      .foregroundStyle(Color(hex: 0x414755).opacity(0.5))
+      .foregroundStyle(.secondary.opacity(0.5))
   }
 
   @ViewBuilder
@@ -203,7 +202,7 @@ public struct SettingsView: View {
       Text(title)
         .font(.system(size: 12, weight: .semibold))
         .tracking(1.2)
-        .foregroundStyle(Color(hex: 0x414755))
+        .foregroundStyle(.secondary)
         .padding(.leading, 8)
       content()
     }
@@ -227,12 +226,12 @@ public struct SettingsView: View {
     HStack(spacing: 12) {
       Image(systemName: icon)
         .font(.system(size: 18))
-        .foregroundStyle(Color(hex: 0x414755))
+        .foregroundStyle(.secondary)
         .frame(width: 22)
 
       Text(title)
         .font(.system(size: 16, weight: .medium))
-        .foregroundStyle(Color(hex: 0x1A1B1F))
+        .foregroundStyle(.primary)
 
       Spacer()
 

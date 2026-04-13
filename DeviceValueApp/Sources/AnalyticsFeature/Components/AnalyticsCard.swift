@@ -4,20 +4,18 @@ import Utils
 struct AnalyticsCard: View {
   let title: String
   let value: String
-  var valueColor: Color = Color(hex: 0x1A1B1F)
+  var valueColor: Color = .primary
   var subtitle: String? = nil
-  var subtitleColor: Color = Color(hex: 0x414755)
+  var subtitleColor: Color = .secondary
   var showProgressBar: Bool = false
   var progressValue: Double = 0
-
-  @Environment(\.colorScheme) private var colorScheme
 
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
       Text(title.uppercased())
         .font(.system(size: 12, weight: .semibold))
         .tracking(0.6)
-        .foregroundStyle(Color(hex: 0x414755))
+        .foregroundStyle(.secondary)
         .padding(.bottom, 0)
 
       Spacer()
@@ -33,7 +31,7 @@ struct AnalyticsCard: View {
           GeometryReader { geometry in
             ZStack(alignment: .leading) {
               RoundedRectangle(cornerRadius: .infinity)
-                .fill(Color(hex: 0xE3E2E7).opacity(0.4))
+                .fill(Color(.secondarySystemBackground))
                 .frame(height: 6)
               RoundedRectangle(cornerRadius: .infinity)
                 .fill(
@@ -59,13 +57,12 @@ struct AnalyticsCard: View {
     .padding(21)
     .background(
       RoundedRectangle(cornerRadius: 24)
-        .fill(colorScheme == .dark ? Color(white: 0.12) : Color(hex: 0xFAF9FE))
+        .fill(Color(.secondarySystemGroupedBackground))
         .overlay(
           RoundedRectangle(cornerRadius: 24)
-            .stroke(Color.white.opacity(0.5), lineWidth: 1)
+            .stroke(Color.primary.opacity(0.05), lineWidth: 1)
         )
-        .shadow(color: colorScheme == .dark ? .clear : Color(hex: 0xEEEDF3), radius: 10, x: 10, y: 10)
-        .shadow(color: colorScheme == .dark ? .clear : .white, radius: 10, x: -10, y: -10)
+        .shadow(color: .black.opacity(0.04), radius: 10, x: 10, y: 10)
     )
   }
 }

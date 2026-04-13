@@ -5,7 +5,6 @@ import Utils
 
 public struct CurrencyRateView: View {
   @Bindable var store: StoreOf<CurrencyRateFeature>
-  @Environment(\.colorScheme) private var colorScheme
 
   public init(store: StoreOf<CurrencyRateFeature>) {
     self.store = store
@@ -17,23 +16,23 @@ public struct CurrencyRateView: View {
       ZStack {
         Text(store.currency.symbol)
           .font(.system(size: 20, weight: .semibold))
-          .foregroundStyle(Color(hex: 0x1A1B1F))
+          .foregroundStyle(.primary)
       }
       .frame(width: 48, height: 48)
       .background(
         RoundedRectangle(cornerRadius: 24)
-          .fill(colorScheme == .dark ? Color(white: 0.2) : Color(hex: 0xEEEDF3))
+          .fill(Color(.systemGray5))
       )
 
       // Currency info
       VStack(alignment: .leading, spacing: 0) {
         Text(store.currency.code)
           .font(.system(size: 10, weight: .semibold))
-          .foregroundStyle(Color(hex: 0x414755).opacity(0.7))
+          .foregroundStyle(.secondary)
           .textCase(.uppercase)
         Text(store.currency.name)
           .font(.system(size: 16, weight: .bold))
-          .foregroundStyle(Color(hex: 0x1A1B1F))
+          .foregroundStyle(.primary)
       }
 
       Spacer()
@@ -63,18 +62,18 @@ public struct CurrencyRateView: View {
             .frame(width: 96)
             .background(
               RoundedRectangle(cornerRadius: 8)
-                .fill(colorScheme == .dark ? Color(white: 0.2) : Color(hex: 0xE9E7ED))
+                .fill(Color(.secondarySystemBackground))
             )
 
           Text("Rate")
             .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(Color(hex: 0x414755).opacity(0.4))
+            .foregroundStyle(.secondary.opacity(0.4))
             .padding(.leading, 12)
         }
       }
     }
     .padding(20)
-    .background(colorScheme == .dark ? Color(white: 0.12) : .white)
+    .background(Color(.secondarySystemGroupedBackground))
     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
       if store.currency.code != "USD" {
         Button(role: .destructive) {
