@@ -22,8 +22,7 @@ public struct AnalyticsView: View {
 
   private var portfolioOverview: some View {
     LazyVGrid(columns: [
-      GridItem(.flexible(minimum: 150), spacing: 16, alignment: .center),
-      GridItem(.flexible(minimum: 150), spacing: 16, alignment: .center)
+      GridItem(.adaptive(minimum: 150), spacing: 16, alignment: .center)
     ], spacing: 16) {
       AnalyticsCard(
         title: Strings.totalPurchaseValue,
