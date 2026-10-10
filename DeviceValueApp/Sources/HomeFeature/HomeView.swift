@@ -36,6 +36,8 @@ public struct HomeView: View {
     List {
       ForEach(self.store.state.devices, id: \.id) { device in
         DeviceCardView(data: device)
+          .frame(maxWidth: 700)
+          .frame(maxWidth: .infinity)
           .listRowSeparator(.hidden)
           .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
           .swipeActions(edge: .trailing, allowsFullSwipe: true) {
