@@ -54,7 +54,7 @@ public struct AddCurrencyView: View {
       .navigationBarTitleDisplayMode(.inline)
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
-          Button(Strings.cancel) {
+          Button(Strings.cancel, systemImage: "xmark") {
             store.send(.addCurrencyCancelled)
             dismiss()
           }

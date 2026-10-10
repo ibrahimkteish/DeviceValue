@@ -156,7 +156,7 @@ struct CurrencyPickerView: View {
     .navigationTitle(Strings.selectCurrency)
     .toolbar {
       ToolbarItem(placement: .cancellationAction) {
-        Button(Strings.cancel) {
+        Button(Strings.cancel, systemImage: "xmark") {
           onCancel()
         }
       }

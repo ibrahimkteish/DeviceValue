@@ -162,6 +162,8 @@ public enum Strings {
   public static let setDefaultCurrency = Strings.tr("Localizable", "SetDefaultCurrency", fallback: "Set Default Currency")
   /// Settings
   public static let settings = Strings.tr("Localizable", "Settings", fallback: "Settings")
+  /// Sort
+  public static let sort = Strings.tr("Localizable", "Sort", fallback: "Sort")
   /// Submit
   public static let submit = Strings.tr("Localizable", "Submit", fallback: "Submit")
   /// Terms and Conditions

@@ -64,16 +64,14 @@ public struct CurrenciesRatesView: View {
     .navigationBarTitleDisplayMode(.inline)
     .toolbar {
       ToolbarItem(placement: .confirmationAction) {
-        Button(Strings.save) {
+        Button(Strings.save, systemImage: "checkmark") {
           store.send(.updateRates)
         }
       }
 
       ToolbarItem(placement: .primaryAction) {
-        Button {
+        Button(Strings.addCurrency, systemImage: "plus") {
           store.send(.addCurrencyButtonTapped)
-        } label: {
-          Image(systemName: "plus")
         }
       }
     }

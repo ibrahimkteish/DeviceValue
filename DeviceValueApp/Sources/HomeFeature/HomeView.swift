@@ -27,7 +27,7 @@ public struct HomeView: View {
         }
       }
     } label: {
-      Image(systemName: "line.horizontal.3.decrease.circle")
+      Label(Strings.sort, systemImage: "line.horizontal.3.decrease.circle")
     }
   }
 
@@ -91,18 +91,14 @@ public struct HomeView: View {
     devices
       .toolbar {
         ToolbarItemGroup(placement: .topBarLeading) {
-          Button {
+          Button(Strings.settings, systemImage: "gear") {
             store.send(.settingsButtonTapped)
-          } label: {
-            Image(systemName: "gear")
           }
         }
 
         ToolbarItemGroup(placement: .topBarTrailing) {
-          Button {
+          Button(Strings.usageAnalytics, systemImage: "chart.bar.fill") {
             store.send(.analyticsButtonTapped)
-          } label: {
-            Image(systemName: "chart.bar.fill")
           }
 
           menu

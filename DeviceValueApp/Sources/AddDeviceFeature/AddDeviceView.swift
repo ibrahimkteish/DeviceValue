@@ -85,16 +85,16 @@ public struct AddDeviceView: View {
       }
     }
     .toolbar {
+      ToolbarItem(placement: .cancellationAction) {
+        Button(Strings.cancel, systemImage: "xmark") {
+          self.store.send(.cancelButtonTapped)
+        }
+      }
       ToolbarItem(placement: .confirmationAction) {
-        Button(store.mode.deviceId != nil ? Strings.update : Strings.submit) {
+        Button(store.mode.deviceId != nil ? Strings.update : Strings.submit, systemImage: "checkmark") {
           self.store.send(.submitButtonTapped)
         }
         .disabled(!store.isValid)
-      }
-      ToolbarItem(placement: .cancellationAction) {
-        Button(Strings.cancel) {
-          self.store.send(.cancelButtonTapped)
-        }
       }
     }
     .navigationTitle(Strings.addNewDevice)
